@@ -1,4 +1,4 @@
-import { resend } from "@/lib/resend";
+import { getResend } from "@/lib/resend";
 
 export async function sendWelcomeEmail(
   name: string,
