@@ -1,4 +1,4 @@
-import { getResend } from "@/lib/resend";
+await getResend().emails.send({
 import { NextResponse } from "next/server";
 
 export async function GET() {
