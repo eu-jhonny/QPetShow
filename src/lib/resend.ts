@@ -1,5 +1,4 @@
-import { Resend } from "resend";
-
+import { getResend } from "@/lib/resend";
 let resend: Resend | null = null;
 
 export function getResend() {
