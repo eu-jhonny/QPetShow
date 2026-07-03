@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { registerSchema } from "@/lib/validators";
+import { getResend } from "@/lib/resend";
 import {
   createUser,
   findUserByEmail,
