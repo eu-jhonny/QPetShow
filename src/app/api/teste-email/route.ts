@@ -1,10 +1,10 @@
-import { resend } from "@/lib/resend";
+import { getResend } from "@/lib/resend";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const { data, error } = await resend.emails.send({
-      from: process.env.EMAIL_FROM!,
+const { data, error } = await getResend().emails.send({      
+  from: process.env.EMAIL_FROM!,
       to: ["vitaofernandes72@gmail.com"], // coloque seu e-mail
       subject: "Teste da QPet 🐶",
       html: `
