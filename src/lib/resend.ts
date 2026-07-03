@@ -1,7 +1,8 @@
-import { getResend } from "@/lib/resend";
+import { Resend } from "resend";
+
 let resend: Resend | null = null;
 
-export function getResend() {
+export function getResend(): Resend {
   if (!process.env.EMAIL_API_KEY) {
     throw new Error("EMAIL_API_KEY não configurada.");
   }
