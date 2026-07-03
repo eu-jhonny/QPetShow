@@ -6,20 +6,24 @@ export async function sendResetPasswordEmail(
 ) {
   const url = `${process.env.APP_URL}/reset-password?token=${token}`;
 
-  return resend.emails.send({
+  return await getResend().emails.send({
     from: process.env.EMAIL_FROM!,
     to: email,
     subject: "Recuperação de senha",
     html: `
       <h1>Recuperação de senha</h1>
 
-      <p>Clique no botão abaixo.</p>
+      <p>Recebemos uma solicitação para redefinir sua senha.</p>
 
-      <a href="${url}">
-        Alterar senha
-      </a>
+      <p>
+        <a href="${url}">
+          Clique aqui para redefinir sua senha
+        </a>
+      </p>
 
       <p>Este link expira em 15 minutos.</p>
+
+      <p>Se você não solicitou essa alteração, ignore este e-mail.</p>
     `,
   });
 }
