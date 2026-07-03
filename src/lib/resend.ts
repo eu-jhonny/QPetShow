@@ -2,7 +2,7 @@ import { Resend } from "resend";
 
 let resend: Resend | null = null;
 
-export function Resend() {
+export function getResend() {
   if (!process.env.EMAIL_API_KEY) {
     throw new Error("EMAIL_API_KEY não configurada.");
   }
