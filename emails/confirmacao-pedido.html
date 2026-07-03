@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pedido confirmado</title>
+</head>
+<body style="margin:0;padding:0;background:#f0f4ee;font-family:'Segoe UI',Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0f4ee;padding:24px 0;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td style="background:linear-gradient(135deg,#4caf2e,#2e6e1d);border-radius:24px 24px 0 0;padding:36px;text-align:center;">
+          <div style="font-size:34px;font-weight:800;">
+            <span style="color:#e5173f;">Q</span><span style="color:#ffc421;">Pet</span><span style="color:#ffffff;">Shop</span> <span style="font-size:24px;">🐾</span>
+          </div>
+        </td></tr>
+        <tr><td style="background:#ffffff;padding:40px 36px;">
+          <div style="text-align:center;font-size:56px;">📦</div>
+          <h1 style="color:#17181c;font-size:26px;margin:16px 0 8px;text-align:center;">Pedido confirmado!</h1>
+          <p style="color:#666;font-size:15px;line-height:1.6;margin:0 0 24px;text-align:center;">
+            Olá, {{nome}}! Recebemos o seu pedido <strong style="color:#4caf2e;">#{{numero_pedido}}</strong> e ele já está sendo preparado com muito carinho.
+          </p>
+          <!-- Itens -->
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #eee;border-radius:16px;">
+            <tr>
+              <td style="padding:16px 20px;border-bottom:1px solid #eee;">
+                <span style="color:#17181c;font-size:14px;font-weight:700;">{{item_1_nome}}</span>
+                <span style="float:right;color:#4caf2e;font-size:14px;font-weight:800;">{{item_1_preco}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:16px 20px;">
+                <span style="color:#17181c;font-size:15px;font-weight:800;">Total</span>
+                <span style="float:right;color:#4caf2e;font-size:18px;font-weight:800;">{{total}}</span>
+              </td>
+            </tr>
+          </table>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:20px;">
+            <tr><td style="background:#f0faeb;border-radius:16px;padding:18px 20px;">
+              <p style="color:#2e6e1d;font-size:13px;margin:0;line-height:1.6;">
+                🚚 <strong>Entrega estimada:</strong> {{previsao_entrega}}<br />
+                📍 {{endereco_entrega}}
+              </p>
+            </td></tr>
+          </table>
+          <div style="text-align:center;">
+            <a href="{{url_pedido}}" style="display:inline-block;background:#4caf2e;color:#ffffff;text-decoration:none;font-weight:800;font-size:16px;padding:16px 40px;border-radius:999px;margin-top:28px;">
+              Acompanhar pedido →
+            </a>
+          </div>
+        </td></tr>
+        <tr><td style="background:#17181c;border-radius:0 0 24px 24px;padding:28px 36px;text-align:center;">
+          <p style="color:#999;font-size:12px;line-height:1.6;margin:0;">
+            QPet Shop · Carinho Q faz a diferença 💚<br />
+            Dúvidas? Responda este e-mail ou fale conosco no WhatsApp.
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "fbfb626b-8c7f-49e0-9af5-f737cbbb6317",
+    "email": "lead@teste.com",
+    "source": "popup",
+    "consent": true,
+    "createdAt": "2026-07-03T21:23:52.795Z"
+  },
+  {
+    "id": "8d8101a9-33b5-4bb5-92c2-b4411e83febb",
+    "email": "vitaofernandes72@gmail.com",
+    "source": "popup",
+    "consent": true,
+    "createdAt": "2026-07-03T21:26:06.386Z"
+  }
+]

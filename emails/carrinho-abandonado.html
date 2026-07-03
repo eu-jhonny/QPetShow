@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Seu pet está esperando</title>
+</head>
+<body style="margin:0;padding:0;background:#f0f4ee;font-family:'Segoe UI',Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0f4ee;padding:24px 0;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr><td style="background:linear-gradient(135deg,#e5173f,#b10e2e);border-radius:24px 24px 0 0;padding:36px;text-align:center;">
+          <div style="font-size:34px;font-weight:800;">
+            <span style="color:#ffffff;">Q</span><span style="color:#ffc421;">Pet</span><span style="color:#ffffff;">Shop</span> <span style="font-size:24px;">🐾</span>
+          </div>
+        </td></tr>
+        <tr><td style="background:#ffffff;padding:40px 36px;text-align:center;">
+          <div style="font-size:56px;">🥺</div>
+          <h1 style="color:#17181c;font-size:26px;margin:16px 0 8px;">Esqueceu algo no carrinho?</h1>
+          <p style="color:#666;font-size:15px;line-height:1.6;margin:0 0 24px;">
+            {{nome}}, seu pet está de olho nos itens que ficaram no carrinho!
+            Finalize agora e ganhe <strong style="color:#e5173f;">frete grátis</strong> em compras acima de R$ 199.
+          </p>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #eee;border-radius:16px;">
+            <tr><td style="padding:16px 20px;">
+              <span style="color:#17181c;font-size:14px;font-weight:700;">{{itens_carrinho}}</span>
+              <span style="float:right;color:#e5173f;font-size:14px;font-weight:800;">{{valor_carrinho}}</span>
+            </td></tr>
+          </table>
+          <a href="{{url_carrinho}}" style="display:inline-block;background:#e5173f;color:#ffffff;text-decoration:none;font-weight:800;font-size:16px;padding:16px 40px;border-radius:999px;margin-top:28px;">
+            Finalizar compra →
+          </a>
+          <p style="color:#999;font-size:12px;margin:20px 0 0;">Os preços e a disponibilidade podem mudar. Garanta já! ⏰</p>
+        </td></tr>
+        <tr><td style="background:#17181c;border-radius:0 0 24px 24px;padding:28px 36px;text-align:center;">
+          <p style="color:#999;font-size:12px;line-height:1.6;margin:0;">
+            QPet Shop 💚 · <a href="{{url_descadastro}}" style="color:#6cc74a;">Não quero mais receber lembretes</a>
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bem-vindo à QPet Shop</title>
+</head>
+<body style="margin:0;padding:0;background:#f0f4ee;font-family:'Segoe UI',Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0f4ee;padding:24px 0;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <!-- Cabeçalho -->
+        <tr><td style="background:linear-gradient(135deg,#4caf2e,#2e6e1d);border-radius:24px 24px 0 0;padding:36px;text-align:center;">
+          <div style="font-size:34px;font-weight:800;">
+            <span style="color:#e5173f;">Q</span><span style="color:#ffc421;">Pet</span><span style="color:#ffffff;">Shop</span> <span style="font-size:24px;">🐾</span>
+          </div>
+          <p style="color:#ddf4d1;margin:8px 0 0;font-size:13px;font-weight:700;letter-spacing:1px;">CARINHO Q FAZ A DIFERENÇA</p>
+        </td></tr>
+        <!-- Corpo -->
+        <tr><td style="background:#ffffff;padding:40px 36px;text-align:center;">
+          <div style="font-size:56px;">🎉</div>
+          <h1 style="color:#17181c;font-size:26px;margin:16px 0 8px;">Bem-vindo(a), {{nome}}!</h1>
+          <p style="color:#666;font-size:15px;line-height:1.6;margin:0 0 24px;">
+            Sua conta foi criada com sucesso. Agora você e seu pet fazem parte da família QPet Shop! 💚
+          </p>
+          <!-- Cupom -->
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            <tr><td style="background:#fff8e1;border:2px dashed #ffc421;border-radius:16px;padding:24px;text-align:center;">
+              <p style="color:#925c0e;font-size:13px;font-weight:700;margin:0;">SEU CUPOM DE BOAS-VINDAS</p>
+              <p style="color:#17181c;font-size:32px;font-weight:800;letter-spacing:3px;margin:8px 0;">BEMVINDO10</p>
+              <p style="color:#925c0e;font-size:13px;margin:0;">10% de desconto na primeira compra</p>
+            </td></tr>
+          </table>
+          <a href="{{url_loja}}" style="display:inline-block;background:#4caf2e;color:#ffffff;text-decoration:none;font-weight:800;font-size:16px;padding:16px 40px;border-radius:999px;margin-top:28px;">
+            Começar a comprar →
+          </a>
+        </td></tr>
+        <!-- Rodapé -->
+        <tr><td style="background:#17181c;border-radius:0 0 24px 24px;padding:28px 36px;text-align:center;">
+          <p style="color:#999;font-size:12px;line-height:1.6;margin:0;">
+            QPet Shop · Av. dos Pets, 1234 — São Paulo/SP<br />
+            Você recebeu este e-mail porque criou uma conta em nossa loja.<br />
+            <a href="{{url_descadastro}}" style="color:#6cc74a;">Cancelar inscrição</a> · <a href="{{url_politicas}}" style="color:#6cc74a;">Política de privacidade</a>
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

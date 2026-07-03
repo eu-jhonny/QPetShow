@@ -1,0 +1,16 @@
+[
+  {
+    "id": "a67e097f-58a0-4aa1-8333-7363f7ffebee",
+    "name": "Teste QPet",
+    "email": "teste@qpetshop.com",
+    "passwordHash": "$2b$12$GS8Kh/ZGjZQOrcV2HXDMBOaXHtws.6.IHDrb.QBo0TnGnO50v1om6",
+    "createdAt": "2026-07-03T21:23:45.156Z"
+  },
+  {
+    "id": "6af47c1f-4781-487c-bbcd-015abd57c493",
+    "name": "João vitor",
+    "email": "vitaofernandes72@gmail.com",
+    "passwordHash": "$2b$12$HiIQy9lLbZDd.pDQjgCTzedaefZk9YvwaA0op5ZWwNzuknFsMfTXW",
+    "createdAt": "2026-07-03T21:45:51.564Z"
+  }
+]

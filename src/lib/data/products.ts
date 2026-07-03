@@ -1,0 +1,469 @@
+export interface Product {
+  id: string;
+  slug: string;
+  name: string;
+  brand: string;
+  category: string;
+  price: number;
+  oldPrice?: number;
+  rating: number;
+  reviews: number;
+  emoji: string;
+  gradient: string;
+  badge?: "promo" | "novo" | "mais-vendido";
+  description: string;
+  features: string[];
+  stock: number;
+  /** Caminho opcional para foto real em /public/products */
+  image?: string;
+}
+
+export const products: Product[] = [
+  {
+    id: "p01",
+    slug: "bravecto-caes-10-20kg",
+    name: "Bravecto Antipulgas e Carrapatos para Cães 10-20kg",
+    brand: "Bravecto",
+    category: "antipulgas",
+    price: 189.9,
+    oldPrice: 253.2,
+    rating: 4.9,
+    reviews: 1284,
+    emoji: "🛡️",
+    gradient: "from-brand-100 to-brand-300",
+    badge: "mais-vendido",
+    description:
+      "Comprimido mastigável de dose única que elimina pulgas e carrapatos por até 12 semanas. Palatável e de ação rápida, é a proteção preferida dos veterinários.",
+    features: ["Proteção por 12 semanas", "Dose única mastigável", "Elimina pulgas e carrapatos", "Uso veterinário"],
+    stock: 42,
+  },
+  {
+    id: "p02",
+    slug: "nexgard-caes-4-10kg",
+    name: "NexGard Tablete Mastigável para Cães 4,1-10kg",
+    brand: "NexGard",
+    category: "antipulgas",
+    price: 98.9,
+    oldPrice: 131.9,
+    rating: 4.8,
+    reviews: 967,
+    emoji: "🛡️",
+    gradient: "from-sky-100 to-sky-300",
+    badge: "promo",
+    description:
+      "Tablete mastigável altamente palatável que elimina pulgas e carrapatos com ação rápida e proteção por 30 dias.",
+    features: ["Altamente palatável", "Ação rápida", "Protege por 30 dias", "1 tablete mastigável"],
+    stock: 68,
+  },
+  {
+    id: "p03",
+    slug: "scalibor-coleira-antiparasitaria",
+    name: "Scalibor Coleira Antiparasitária para Cães 65cm",
+    brand: "Scalibor",
+    category: "antipulgas",
+    price: 149.9,
+    oldPrice: 199.9,
+    rating: 4.7,
+    reviews: 542,
+    emoji: "📿",
+    gradient: "from-sun-100 to-sun-300",
+    badge: "promo",
+    description:
+      "Coleira antiparasitária com 12 meses de proteção contra pulgas, carrapatos e mosquitos flebotomíneos (leishmaniose).",
+    features: ["12 meses de proteção", "Contra leishmaniose", "Fácil aplicação", "Resistente à água"],
+    stock: 31,
+  },
+  {
+    id: "p04",
+    slug: "pipicat-multicat-areia-2kg",
+    name: "Pipicat Multicat Areia Higiênica Grãos Finos 2kg",
+    brand: "Pipicat",
+    category: "areia-tapetes",
+    price: 14.9,
+    oldPrice: 24.9,
+    rating: 4.8,
+    reviews: 2103,
+    emoji: "🐱",
+    gradient: "from-blue-100 to-blue-300",
+    badge: "mais-vendido",
+    description:
+      "Nova fórmula com controle de odores, mais absorção e torrões mais firmes. Grãos finos para melhor performance e rendimento.",
+    features: ["Controle de odores", "Torrões + firmes", "Grãos finos", "Rende mais"],
+    stock: 120,
+  },
+  {
+    id: "p05",
+    slug: "zeepad-tapete-higienico-30un",
+    name: "Zee.Pad Tapete Higiênico Gel Ultra Absorvente 60x60cm 30un",
+    brand: "Zee.Pad",
+    category: "areia-tapetes",
+    price: 54.9,
+    oldPrice: 89.9,
+    rating: 4.9,
+    reviews: 876,
+    emoji: "🧻",
+    gradient: "from-teal-100 to-teal-300",
+    badge: "promo",
+    description:
+      "Tapetes higiênicos com 5 camadas de proteção, gel ultra absorvente, controle de odores e fitas adesivas para fixação.",
+    features: ["5 camadas de proteção", "Gel ultra absorvente", "Controle de odores", "Fitas adesivas"],
+    stock: 84,
+  },
+  {
+    id: "p06",
+    slug: "tapeco-super-premium-30un",
+    name: "Tapeco Super Premium Tapete Higiênico 60x60cm 30un",
+    brand: "Tapeco",
+    category: "areia-tapetes",
+    price: 44.9,
+    oldPrice: 74.9,
+    rating: 4.6,
+    reviews: 654,
+    emoji: "🐕",
+    gradient: "from-brand-100 to-emerald-300",
+    description:
+      "Rápida absorção, controle de odores, camadas de proteção e fitas adesivas. Cuidado e conforto que seu pet merece.",
+    features: ["Rápida absorção", "Controle de odores", "Camadas de proteção", "60x60cm de área total"],
+    stock: 97,
+  },
+  {
+    id: "p07",
+    slug: "finotrato-cat-sache-frango-85g",
+    name: "Finotrato Cat Sachê Sabor Frango ao Molho 85g",
+    brand: "Finotrato",
+    category: "saches-petiscos",
+    price: 3.49,
+    oldPrice: 3.99,
+    rating: 4.7,
+    reviews: 1521,
+    emoji: "🍗",
+    gradient: "from-violet-100 to-purple-300",
+    description:
+      "Alimento premium 100% completo e balanceado, com taurina para saúde e energia. Trato urinário saudável e pelagem brilhante.",
+    features: ["Com taurina", "100% completo", "Trato urinário saudável", "85g"],
+    stock: 300,
+  },
+  {
+    id: "p08",
+    slug: "golden-gourmet-sache-frango-100g",
+    name: "Golden Gourmet Sachê Sabor Frango ao Molho 100g",
+    brand: "Golden",
+    category: "saches-petiscos",
+    price: 4.29,
+    oldPrice: 4.99,
+    rating: 4.8,
+    reviews: 1893,
+    emoji: "🍖",
+    gradient: "from-orange-100 to-orange-300",
+    badge: "mais-vendido",
+    description:
+      "Premium especial com vitaminas e minerais, sem corantes artificiais. Pele saudável e pelos brilhantes.",
+    features: ["Sem corantes artificiais", "Vitaminas e minerais", "Pele e pelos saudáveis", "100g"],
+    stock: 250,
+  },
+  {
+    id: "p09",
+    slug: "petprob-palitos-carne-120g",
+    name: "PetProb Palitos Mastigáveis Sabor Carne 120g",
+    brand: "PetProb",
+    category: "saches-petiscos",
+    price: 12.9,
+    oldPrice: 14.9,
+    rating: 4.6,
+    reviews: 438,
+    emoji: "🥩",
+    gradient: "from-fire-100 to-fire-300",
+    description:
+      "Palitos 100% naturais que ajudam na saúde oral. Fonte de proteína com baixo teor de gordura.",
+    features: ["100% natural", "Saúde oral", "Fonte de proteína", "Baixo teor de gordura"],
+    stock: 145,
+  },
+  {
+    id: "p10",
+    slug: "racao-golden-formula-adultos-15kg",
+    name: "Ração Golden Fórmula Cães Adultos Frango e Arroz 15kg",
+    brand: "Golden",
+    category: "cachorros",
+    price: 169.9,
+    oldPrice: 199.9,
+    rating: 4.9,
+    reviews: 3241,
+    emoji: "🐶",
+    gradient: "from-sun-100 to-orange-300",
+    badge: "mais-vendido",
+    description:
+      "Ração super premium sem corantes e sem transgênicos. Nutrição completa para cães adultos de todas as raças.",
+    features: ["Super premium", "Sem corantes", "Frango e arroz", "15kg"],
+    stock: 56,
+  },
+  {
+    id: "p11",
+    slug: "racao-premier-gatos-castrados-7kg",
+    name: "Ração Premier Gatos Castrados Frango 7,5kg",
+    brand: "Premier",
+    category: "gatos",
+    price: 219.9,
+    oldPrice: 259.9,
+    rating: 4.9,
+    reviews: 1764,
+    emoji: "🐱",
+    gradient: "from-brand-100 to-brand-300",
+    badge: "promo",
+    description:
+      "Alimento super premium para gatos castrados, com controle de peso e pH urinário balanceado.",
+    features: ["Controle de peso", "pH urinário balanceado", "Super premium", "7,5kg"],
+    stock: 38,
+  },
+  {
+    id: "p12",
+    slug: "brinquedo-kong-classic-m",
+    name: "Brinquedo KONG Classic Recheável Tamanho M",
+    brand: "KONG",
+    category: "brinquedos",
+    price: 79.9,
+    oldPrice: 99.9,
+    rating: 4.8,
+    reviews: 892,
+    emoji: "🎾",
+    gradient: "from-fire-100 to-rose-300",
+    badge: "novo",
+    description:
+      "O clássico brinquedo recheável de borracha ultra resistente. Estimula o instinto natural e combate o tédio.",
+    features: ["Borracha resistente", "Recheável", "Combate ansiedade", "Tamanho M"],
+    stock: 74,
+  },
+  {
+    id: "p13",
+    slug: "arranhador-torre-gatos",
+    name: "Arranhador Torre para Gatos com Brinquedo 60cm",
+    brand: "PetPlay",
+    category: "brinquedos",
+    price: 129.9,
+    oldPrice: 179.9,
+    rating: 4.5,
+    reviews: 312,
+    emoji: "🐈",
+    gradient: "from-violet-100 to-indigo-300",
+    description:
+      "Torre arranhadora em sisal natural com plataforma e brinquedo suspenso. Protege seus móveis e diverte seu gato.",
+    features: ["Sisal natural", "60cm de altura", "Plataforma acolchoada", "Brinquedo incluso"],
+    stock: 22,
+  },
+  {
+    id: "p14",
+    slug: "cama-pet-premium-m",
+    name: "Cama Pet Premium Redonda Ultra Macia Tamanho M",
+    brand: "QPet Home",
+    category: "acessorios",
+    price: 99.9,
+    oldPrice: 149.9,
+    rating: 4.9,
+    reviews: 567,
+    emoji: "🛏️",
+    gradient: "from-amber-100 to-amber-300",
+    badge: "novo",
+    description:
+      "Cama redonda com pelúcia ultra macia efeito calmante. Base antiderrapante e capa removível lavável.",
+    features: ["Pelúcia calmante", "Base antiderrapante", "Capa lavável", "Tamanho M — até 12kg"],
+    stock: 45,
+  },
+  {
+    id: "p15",
+    slug: "coleira-peitoral-antipuxao-m",
+    name: "Peitoral Anti-Puxão com Guia Acolchoado Tamanho M",
+    brand: "QPet Walk",
+    category: "acessorios",
+    price: 69.9,
+    oldPrice: 89.9,
+    rating: 4.7,
+    reviews: 421,
+    emoji: "🦮",
+    gradient: "from-brand-100 to-teal-300",
+    description:
+      "Peitoral ergonômico acolchoado com alça de controle e guia de 1,2m. Passeios mais seguros e confortáveis.",
+    features: ["Anti-puxão", "Acolchoado", "Guia inclusa", "Refletivo noturno"],
+    stock: 58,
+  },
+  {
+    id: "p16",
+    slug: "fonte-bebedouro-gatos-2l",
+    name: "Fonte Bebedouro Automática para Gatos 2L",
+    brand: "PetFlow",
+    category: "acessorios",
+    price: 119.9,
+    oldPrice: 159.9,
+    rating: 4.6,
+    reviews: 289,
+    emoji: "⛲",
+    gradient: "from-sky-100 to-cyan-300",
+    badge: "novo",
+    description:
+      "Fonte silenciosa com filtro de carvão ativado que estimula a hidratação. Água sempre fresca e em movimento.",
+    features: ["Ultra silenciosa", "Filtro carvão ativado", "2 litros", "LED indicador"],
+    stock: 33,
+  },
+  {
+    id: "p17",
+    slug: "shampoo-neutro-pet-500ml",
+    name: "Shampoo Neutro Hipoalergênico para Pets 500ml",
+    brand: "QPet Care",
+    category: "farmacia",
+    price: 29.9,
+    oldPrice: 39.9,
+    rating: 4.8,
+    reviews: 734,
+    emoji: "🧴",
+    gradient: "from-rose-100 to-pink-300",
+    description:
+      "Shampoo pH neutro hipoalergênico para cães e gatos. Limpa suavemente, hidrata e deixa os pelos brilhantes.",
+    features: ["pH neutro", "Hipoalergênico", "Cães e gatos", "500ml"],
+    stock: 92,
+  },
+  {
+    id: "p18",
+    slug: "vermifugo-caes-vermivet-2comp",
+    name: "Vermífugo Vermivet Plus Cães 2 Comprimidos",
+    brand: "Vermivet",
+    category: "farmacia",
+    price: 24.9,
+    oldPrice: 32.9,
+    rating: 4.7,
+    reviews: 512,
+    emoji: "💊",
+    gradient: "from-emerald-100 to-green-300",
+    description:
+      "Vermífugo de amplo espectro para cães. Combate os principais vermes intestinais com segurança.",
+    features: ["Amplo espectro", "2 comprimidos", "Uso veterinário", "Para cães até 10kg"],
+    stock: 110,
+  },
+  {
+    id: "p19",
+    slug: "racao-whiskas-gatos-adultos-10kg",
+    name: "Ração Whiskas Gatos Adultos Carne 10,1kg",
+    brand: "Whiskas",
+    category: "gatos",
+    price: 139.9,
+    oldPrice: 169.9,
+    rating: 4.6,
+    reviews: 2087,
+    emoji: "😺",
+    gradient: "from-purple-100 to-violet-300",
+    badge: "promo",
+    description:
+      "Alimento completo para gatos adultos sabor carne, com nutrientes essenciais para vitalidade e pelagem saudável.",
+    features: ["Sabor carne", "Ômega 3 e 6", "Vitaminas A e E", "10,1kg"],
+    stock: 47,
+  },
+  {
+    id: "p20",
+    slug: "bifinho-petisco-caes-carne-500g",
+    name: "Bifinho Premium para Cães Sabor Carne 500g",
+    brand: "PetProb",
+    category: "saches-petiscos",
+    price: 19.9,
+    oldPrice: 27.9,
+    rating: 4.8,
+    reviews: 1105,
+    emoji: "🦴",
+    gradient: "from-amber-100 to-orange-300",
+    badge: "promo",
+    description:
+      "Bifinhos macios e irresistíveis, feitos com carinho. Ingredientes de qualidade para mais saúde e bem-estar.",
+    features: ["Ingredientes de qualidade", "Macio e palatável", "500g", "Feito com carinho"],
+    stock: 180,
+  },
+  {
+    id: "p21",
+    slug: "racao-golden-filhotes-15kg",
+    name: "Ração Golden Fórmula Cães Filhotes Frango e Arroz 15kg",
+    brand: "Golden",
+    category: "cachorros",
+    price: 179.9,
+    oldPrice: 209.9,
+    rating: 4.9,
+    reviews: 1456,
+    emoji: "🐕",
+    gradient: "from-yellow-100 to-sun-300",
+    description:
+      "Nutrição completa para filhotes com DHA para desenvolvimento cerebral e cálcio para ossos fortes.",
+    features: ["Com DHA", "Cálcio e fósforo", "Sem transgênicos", "15kg"],
+    stock: 41,
+  },
+  {
+    id: "p22",
+    slug: "areia-silica-cristais-1-6kg",
+    name: "Areia de Sílica Cristais Premium para Gatos 1,6kg",
+    brand: "PipiClean",
+    category: "areia-tapetes",
+    price: 34.9,
+    oldPrice: 44.9,
+    rating: 4.7,
+    reviews: 623,
+    emoji: "💎",
+    gradient: "from-cyan-100 to-blue-300",
+    badge: "novo",
+    description:
+      "Cristais de sílica com máxima absorção e controle total de odores por até 30 dias. Sem poeira.",
+    features: ["Dura até 30 dias", "Sem poeira", "Máxima absorção", "1,6kg"],
+    stock: 66,
+  },
+  {
+    id: "p23",
+    slug: "bolinha-interativa-led",
+    name: "Bolinha Interativa com LED e Movimento Automático",
+    brand: "PetPlay",
+    category: "brinquedos",
+    price: 49.9,
+    oldPrice: 69.9,
+    rating: 4.4,
+    reviews: 198,
+    emoji: "✨",
+    gradient: "from-fuchsia-100 to-pink-300",
+    badge: "novo",
+    description:
+      "Bolinha recarregável via USB com movimento automático e luzes LED. Horas de diversão para cães e gatos.",
+    features: ["Movimento automático", "LED colorido", "Recarregável USB", "Silenciosa"],
+    stock: 87,
+  },
+  {
+    id: "p24",
+    slug: "comedouro-elevado-duplo-inox",
+    name: "Comedouro Elevado Duplo em Inox com Suporte Bambu",
+    brand: "QPet Home",
+    category: "acessorios",
+    price: 89.9,
+    oldPrice: 119.9,
+    rating: 4.8,
+    reviews: 345,
+    emoji: "🥣",
+    gradient: "from-stone-100 to-stone-300",
+    description:
+      "Comedouro duplo em aço inox com suporte elevado de bambu. Melhora a postura e a digestão do seu pet.",
+    features: ["Aço inox", "Suporte de bambu", "Altura ergonômica", "Fácil limpeza"],
+    stock: 29,
+  },
+];
+
+export function getProduct(slug: string) {
+  return products.find((p) => p.slug === slug);
+}
+
+export function getProductsByCategory(category: string) {
+  return products.filter((p) => p.category === category);
+}
+
+export function searchProducts(query: string) {
+  const q = query.toLowerCase().trim();
+  if (!q) return [];
+  return products.filter(
+    (p) =>
+      p.name.toLowerCase().includes(q) ||
+      p.brand.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q)
+  );
+}
+
+export const featuredProducts = products.filter((p) => p.badge === "mais-vendido" || p.rating >= 4.8);
+export const promoProducts = products.filter((p) => p.oldPrice && p.oldPrice > p.price);
+export const newProducts = products.filter((p) => p.badge === "novo");

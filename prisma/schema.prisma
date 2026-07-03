@@ -1,0 +1,120 @@
+// Schema Prisma para produção (PostgreSQL).
+// Em desenvolvimento, o app usa armazenamento JSON em /data.
+// Para ativar: configure DATABASE_URL no .env e rode `npx prisma migrate dev`.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(uuid())
+  name         String
+  email        String    @unique
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  orders       Order[]
+  addresses    Address[]
+  favorites    Favorite[]
+}
+
+model Address {
+  id           String  @id @default(uuid())
+  userId       String
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName     String
+  cep          String
+  street       String
+  number       String
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  phone        String
+  isDefault    Boolean @default(false)
+}
+
+model Product {
+  id          String      @id @default(uuid())
+  slug        String      @unique
+  name        String
+  brand       String
+  category    String
+  description String
+  price       Decimal     @db.Decimal(10, 2)
+  oldPrice    Decimal?    @db.Decimal(10, 2)
+  stock       Int         @default(0)
+  rating      Float       @default(0)
+  reviews     Int         @default(0)
+  image       String?
+  active      Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  orderItems  OrderItem[]
+  favorites   Favorite[]
+}
+
+model Favorite {
+  userId    String
+  productId String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([userId, productId])
+}
+
+model Order {
+  id            String      @id @default(uuid())
+  code          String      @unique
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  status        OrderStatus @default(PENDING)
+  subtotal      Decimal     @db.Decimal(10, 2)
+  shipping      Decimal     @db.Decimal(10, 2)
+  discount      Decimal     @default(0) @db.Decimal(10, 2)
+  total         Decimal     @db.Decimal(10, 2)
+  paymentMethod String
+  createdAt     DateTime    @default(now())
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  unitPrice Decimal @db.Decimal(10, 2)
+}
+
+model Lead {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  source    String
+  consent   Boolean
+  createdAt DateTime @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELED
+}
