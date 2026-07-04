@@ -9,6 +9,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { NewsletterPopup } from "@/components/leads/newsletter-popup";
+import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 
 const baloo = Baloo_2({
   variable: "--font-baloo",
@@ -84,6 +85,7 @@ export default function RootLayout({
                 <Footer />
                 <MobileNav />
                 <NewsletterPopup />
+                <WhatsAppButton />
               </HideOnAdmin>
             </FavoritesProvider>
           </CartProvider>

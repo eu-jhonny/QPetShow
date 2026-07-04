@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import {
-  LayoutDashboard, ShoppingBag, Package, Users, Tag, Target, MessageSquare, LogOut, Store, Images, Settings,
+  LayoutDashboard, ShoppingBag, Package, Users, Tag, Target, MessageSquare, LogOut, Store, Images, Settings, Camera,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +13,7 @@ const links = [
   { href: "/admin/pedidos", label: "Pedidos", icon: ShoppingBag },
   { href: "/admin/produtos", label: "Produtos", icon: Package },
   { href: "/admin/banners", label: "Banners", icon: Images },
+  { href: "/admin/instagram", label: "Instagram", icon: Camera },
   { href: "/admin/leads", label: "Leads", icon: Target },
   { href: "/admin/clientes", label: "Clientes", icon: Users },
   { href: "/admin/cupons", label: "Cupons", icon: Tag },

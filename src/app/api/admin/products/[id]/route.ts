@@ -3,6 +3,11 @@ import { z } from "zod";
 import { getAdminSession } from "@/lib/server/auth";
 import { getCatalog, upsertProduct, deleteProduct } from "@/lib/server/catalog";
 
+const iconKeys = [
+  "dog", "cat", "shield", "layers", "drumstick", "toy", "bone", "pill",
+  "beef", "bed", "paw", "droplets", "bath", "sparkles", "zap", "utensils",
+] as const;
+
 const patchSchema = z.object({
   name: z.string().trim().min(3).max(140).optional(),
   brand: z.string().trim().min(1).max(60).optional(),
@@ -13,6 +18,10 @@ const patchSchema = z.object({
   description: z.string().trim().min(10).max(2000).optional(),
   badge: z.enum(["promo", "novo", "mais-vendido"]).nullable().optional(),
   image: z.string().max(400).nullable().optional(),
+  icon: z.enum(iconKeys).optional(),
+  features: z.array(z.string().trim().max(80)).max(12).optional(),
+  rating: z.number().min(0).max(5).optional(),
+  reviews: z.number().int().min(0).optional(),
   active: z.boolean().optional(),
 });
 

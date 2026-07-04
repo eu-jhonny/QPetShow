@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getActiveBanners } from "@/lib/server/banners";
+import { getInstagramPhotos } from "@/lib/server/instagram";
 import { HeroCarousel } from "@/components/home/hero-carousel";
 import { CategoryGrid } from "@/components/home/category-grid";
 import { ProductCarousel } from "@/components/home/product-carousel";
@@ -24,6 +25,7 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const banners = await getActiveBanners();
+  const instagramPhotos = await getInstagramPhotos();
   return (
     <>
       <HeroCarousel banners={banners} />
@@ -112,7 +114,7 @@ export default async function HomePage() {
           subtitle="Bastidores, dicas e muita fofura na sua timeline"
           align="center"
         />
-        <InstagramGrid />
+        <InstagramGrid photos={instagramPhotos} />
       </section>
 
       {/* Newsletter */}
