@@ -3,12 +3,50 @@ import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { readCollection, writeCollection } from "./store";
 
+export interface SavedAddress {
+  id: string;
+  label: string;
+  cep: string;
+  street: string;
+  number: string;
+  complement?: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  isDefault?: boolean;
+}
+
 export interface StoredUser {
   id: string;
   name: string;
   email: string;
   passwordHash: string;
+  phone?: string;
+  avatar?: string;
+  addresses?: SavedAddress[];
   createdAt: string;
+}
+
+export type PublicUser = Omit<StoredUser, "passwordHash">;
+
+export function toPublicUser(u: StoredUser): PublicUser {
+  const { passwordHash: _omit, ...rest } = u;
+  void _omit;
+  return rest;
+}
+
+export async function getUserById(id: string): Promise<StoredUser | null> {
+  const users = await readCollection<StoredUser>("users");
+  return users.find((u) => u.id === id) ?? null;
+}
+
+export async function updateUser(id: string, patch: Partial<StoredUser>): Promise<StoredUser | null> {
+  const users = await readCollection<StoredUser>("users");
+  const idx = users.findIndex((u) => u.id === id);
+  if (idx === -1) return null;
+  users[idx] = { ...users[idx], ...patch, id: users[idx].id, email: users[idx].email, passwordHash: users[idx].passwordHash };
+  await writeCollection("users", users);
+  return users[idx];
 }
 
 export interface SessionPayload {

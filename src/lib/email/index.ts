@@ -1,12 +1,20 @@
 import { getResend, isEmailEnabled } from "@/lib/resend";
+import { getSettings } from "@/lib/server/settings";
 import * as t from "./templates";
 
-function from() {
-  return process.env.EMAIL_FROM ?? "onboarding@resend.dev";
+async function from() {
+  const s = await getSettings().catch(() => null);
+  return s?.emailFrom || process.env.EMAIL_FROM || "onboarding@resend.dev";
 }
 
-function adminEmail() {
-  return process.env.EMAIL_ADMIN ?? process.env.ADMIN_EMAILS?.split(",")[0]?.trim() ?? from();
+async function adminEmail() {
+  const s = await getSettings().catch(() => null);
+  return (
+    s?.emailAdmin ||
+    process.env.EMAIL_ADMIN ||
+    process.env.ADMIN_EMAILS?.split(",")[0]?.trim() ||
+    (await from())
+  );
 }
 
 interface SendArgs {
@@ -27,7 +35,7 @@ export async function sendEmail({ to, subject, html }: SendArgs): Promise<{ ok: 
     return { ok: false, error: "email-disabled" };
   }
   try {
-    const { error } = await resend.emails.send({ from: from(), to, subject, html });
+    const { error } = await resend.emails.send({ from: await from(), to, subject, html });
     if (error) {
       console.error(`[email] Resend recusou "${subject}" para ${to}:`, error);
       return { ok: false, error: String(error.message ?? error) };
@@ -82,7 +90,7 @@ export async function sendOrderShipped(to: string, order: OrderLite, tracking: s
 
 export async function notifyAdminNewOrder(order: OrderLite) {
   const c = t.adminNewOrderEmail(order);
-  return sendEmail({ to: adminEmail(), subject: c.subject, html: c.html });
+  return sendEmail({ to: await adminEmail(), subject: c.subject, html: c.html });
 }
 
 export function sendContactAck(to: string, name: string) {
@@ -90,7 +98,7 @@ export function sendContactAck(to: string, name: string) {
   return sendEmail({ to, subject: c.subject, html: c.html });
 }
 
-export function notifyAdminContact(data: { name: string; email: string; phone?: string; subject: string; message: string }) {
+export async function notifyAdminContact(data: { name: string; email: string; phone?: string; subject: string; message: string }) {
   const c = t.adminContactEmail(data);
-  return sendEmail({ to: adminEmail(), subject: c.subject, html: c.html });
+  return sendEmail({ to: await adminEmail(), subject: c.subject, html: c.html });
 }

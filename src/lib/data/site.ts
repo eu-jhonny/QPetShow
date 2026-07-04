@@ -135,9 +135,11 @@ export const blogPosts: BlogPost[] = [
 export const storeInfo = {
   name: "QPet Shop",
   slogan: "Carinho Q faz a diferença.",
-  whatsapp: "(11) 99999-9999",
+  whatsapp: "(11) 91508-5219",
+  whatsappDigits: "5511915085219",
   email: "contato@qpetshop.com.br",
-  address: "Av. dos Pets, 1234 — São Paulo/SP",
-  instagram: "@qpetshop",
+  address: "Av. Aimara, 592 — Parque Pirajussara, Embu das Artes/SP",
+  instagram: "@qpetshop.oficial",
+  instagramUrl: "https://instagram.com/qpetshop.oficial",
   freeShippingMin: 199,
 };
