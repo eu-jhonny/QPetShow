@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { searchProducts } from "@/lib/data/products";
+import { SearchX } from "lucide-react";
+import { searchCatalog } from "@/lib/server/catalog";
 import { ProductListing } from "@/components/product/product-listing";
 import Link from "next/link";
 
@@ -8,13 +9,15 @@ export const metadata: Metadata = {
   robots: { index: false },
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function BuscaPage({
   searchParams,
 }: {
   searchParams: Promise<{ q?: string }>;
 }) {
   const { q = "" } = await searchParams;
-  const results = searchProducts(q);
+  const results = await searchCatalog(q);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10">
@@ -34,7 +37,9 @@ export default async function BuscaPage({
 
       {results.length === 0 ? (
         <div className="flex flex-col items-center gap-5 rounded-[2rem] border-2 border-dashed border-gray-200 py-20 text-center dark:border-white/15">
-          <span className="text-7xl" aria-hidden>🐕‍🦺</span>
+          <span className="flex size-20 items-center justify-center rounded-full bg-gray-100 text-gray-400 dark:bg-white/5" aria-hidden>
+            <SearchX className="size-10" />
+          </span>
           <div>
             <p className="font-display text-2xl font-extrabold">Farejamos por todo lado...</p>
             <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">

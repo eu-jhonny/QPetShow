@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { HeartOff } from "lucide-react";
 import { useFavorites } from "@/components/providers/favorites-provider";
 import { products } from "@/lib/data/products";
 import { ProductCard } from "@/components/product/product-card";
@@ -23,7 +24,9 @@ export default function FavoritosPage() {
         </div>
       ) : favoriteProducts.length === 0 ? (
         <div className="flex flex-col items-center gap-4 rounded-3xl border-2 border-dashed border-gray-200 py-16 text-center dark:border-white/15">
-          <span className="animate-float text-6xl" aria-hidden>💔</span>
+          <span className="flex size-20 items-center justify-center rounded-full bg-gray-100 text-gray-400 dark:bg-white/5" aria-hidden>
+            <HeartOff className="size-10" />
+          </span>
           <div>
             <p className="font-display text-xl font-extrabold">Nenhum favorito ainda</p>
             <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">

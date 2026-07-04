@@ -85,7 +85,7 @@ export function SearchBar({ className, autoFocus = false }: { className?: string
                     onClick={() => setOpen(false)}
                     className="flex items-center gap-3 px-4 py-3 transition hover:bg-brand-50 dark:hover:bg-white/5"
                   >
-                    <ProductImage product={p} className="size-12 shrink-0" emojiClassName="text-2xl" />
+                    <ProductImage product={p} className="size-12 shrink-0" iconClassName="size-6" />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-bold text-ink dark:text-white">{p.name}</p>
                       <p className="text-xs font-semibold text-brand-600 dark:text-brand-300">{formatBRL(p.price)}</p>

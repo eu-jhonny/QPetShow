@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, CreditCard, Landmark, QrCode, Lock, ArrowLeft } from "lucide-react";
+import { Check, CreditCard, Landmark, QrCode, Lock, ArrowLeft, ShoppingBag } from "lucide-react";
 import { useCart } from "@/components/providers/cart-provider";
 import { useToast } from "@/components/providers/toast-provider";
 import { checkoutAddressSchema, type CheckoutAddressInput } from "@/lib/validators";
@@ -35,6 +35,12 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState<Partial<Record<keyof CheckoutAddressInput, string>>>({});
   const [payment, setPayment] = useState<PaymentMethod>("pix");
   const [placing, setPlacing] = useState(false);
+  const [result, setResult] = useState<{
+    code: string;
+    status: string;
+    pixQrCode?: string;
+    boletoBarcode?: string;
+  } | null>(null);
 
   const freeShipping = subtotal >= storeInfo.freeShippingMin;
   const shipping = freeShipping ? 0 : 19.9;
@@ -44,7 +50,9 @@ export default function CheckoutPage() {
   if (hydrated && items.length === 0 && step < 3) {
     return (
       <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-4 py-24 text-center">
-        <span className="text-7xl" aria-hidden>🛍️</span>
+        <span className="flex size-20 items-center justify-center rounded-full bg-gray-100 text-gray-400 dark:bg-white/5" aria-hidden>
+          <ShoppingBag className="size-10" />
+        </span>
         <h1 className="font-display text-3xl font-extrabold">Nada por aqui ainda</h1>
         <p className="text-gray-500 dark:text-gray-400">Adicione produtos ao carrinho para finalizar a compra.</p>
         <Link href="/produtos" className="rounded-full bg-brand-500 px-8 py-3.5 font-extrabold text-white shadow-soft transition hover:bg-brand-600">
@@ -76,12 +84,32 @@ export default function CheckoutPage() {
 
   async function placeOrder() {
     setPlacing(true);
-    // Simula processamento do pagamento — integrar gateway real (Stripe/Pagar.me) aqui
-    await new Promise((r) => setTimeout(r, 1800));
-    setPlacing(false);
-    setStep(3);
-    clear();
-    toast("Pedido realizado com sucesso! 🎉");
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((i) => ({ productId: i.product.id, quantity: i.quantity })),
+          address,
+          paymentMethod: payment,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Não foi possível concluir o pedido");
+      setResult({
+        code: data.order.code,
+        status: data.order.status,
+        pixQrCode: data.payment?.pixQrCode,
+        boletoBarcode: data.payment?.boletoBarcode,
+      });
+      setStep(3);
+      clear();
+      toast("Pedido realizado com sucesso! 🎉");
+    } catch (err) {
+      toast(err instanceof Error ? err.message : "Erro ao finalizar o pedido", "error");
+    } finally {
+      setPlacing(false);
+    }
   }
 
   return (
@@ -242,18 +270,50 @@ export default function CheckoutPage() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
-              className="flex size-24 items-center justify-center rounded-full bg-brand-100 text-5xl dark:bg-brand-950"
+              className="flex size-24 items-center justify-center rounded-full bg-brand-100 text-brand-600 dark:bg-brand-950 dark:text-brand-300"
               aria-hidden
             >
-              🎉
+              <Check className="size-12" strokeWidth={3} />
             </motion.span>
             <div>
-              <h1 className="font-display text-3xl font-extrabold">Pedido confirmado!</h1>
+              <h1 className="font-display text-3xl font-extrabold">
+                {payment === "cartao" ? "Pagamento aprovado!" : "Pedido recebido!"}
+              </h1>
               <p className="mt-2 text-gray-500 dark:text-gray-400">
-                Pedido <strong className="text-ink dark:text-white">#QPS-{Math.floor(100000 + Math.random() * 900000)}</strong> recebido.
-                Enviamos a confirmação e o acompanhamento para o seu e-mail. 💌
+                Pedido <strong className="text-ink dark:text-white">#{result?.code}</strong> registrado.
+                Enviamos a confirmação e o acompanhamento para o seu e-mail.
               </p>
             </div>
+
+            {/* Instruções de pagamento PIX */}
+            {result?.pixQrCode && (
+              <div className="w-full rounded-3xl border-2 border-brand-200 bg-brand-50 p-6 text-left dark:border-brand-800 dark:bg-brand-950/40">
+                <p className="flex items-center gap-2 font-extrabold text-brand-700 dark:text-brand-300">
+                  <QrCode className="size-5" aria-hidden /> Pague com PIX para liberar o envio
+                </p>
+                <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">Copie o código abaixo e cole no app do seu banco:</p>
+                <div className="mt-2 flex items-center gap-2">
+                  <code className="flex-1 truncate rounded-xl bg-white px-3 py-2.5 text-xs font-mono dark:bg-black/30">{result.pixQrCode}</code>
+                  <button
+                    onClick={() => { navigator.clipboard.writeText(result.pixQrCode!); toast("Código PIX copiado!"); }}
+                    className="shrink-0 rounded-xl bg-brand-500 px-4 py-2.5 text-xs font-extrabold text-white transition hover:bg-brand-600"
+                  >
+                    Copiar
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Instruções de boleto */}
+            {result?.boletoBarcode && (
+              <div className="w-full rounded-3xl border-2 border-sun-300 bg-sun-50 p-6 text-left dark:border-sun-700 dark:bg-sun-900/20">
+                <p className="flex items-center gap-2 font-extrabold text-sun-800 dark:text-sun-300">
+                  <Landmark className="size-5" aria-hidden /> Boleto gerado
+                </p>
+                <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">Linha digitável (vence em 2 dias úteis):</p>
+                <code className="mt-2 block break-all rounded-xl bg-white px-3 py-2.5 text-xs font-mono dark:bg-black/30">{result.boletoBarcode}</code>
+              </div>
+            )}
             <div className="flex w-full flex-col gap-3 sm:flex-row">
               <Link href="/conta/pedidos" className="flex h-12 flex-1 items-center justify-center rounded-full border-2 border-brand-500 font-extrabold text-brand-600 transition hover:bg-brand-50 dark:text-brand-300">
                 Acompanhar pedido

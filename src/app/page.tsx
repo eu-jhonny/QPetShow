@@ -37,7 +37,7 @@ export default function HomePage() {
       {/* Mais vendidos */}
       <section className="mx-auto max-w-7xl px-4 pt-16" aria-labelledby="mais-vendidos">
         <SectionHeading
-          eyebrow="⭐ Favoritos dos tutores"
+          eyebrow="Favoritos dos tutores"
           title="Mais vendidos"
           subtitle="Os produtos que os pets (e os tutores) mais amam"
           href="/produtos"
@@ -57,7 +57,7 @@ export default function HomePage() {
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
               <span className="mb-2 inline-block rounded-full bg-white/20 px-4 py-1 text-xs font-extrabold uppercase tracking-widest text-white backdrop-blur">
-                🔥 Só hoje
+                Ofertas do dia
               </span>
               <h2 className="font-display text-3xl font-extrabold text-white md:text-4xl">
                 Ofertas imperdíveis
@@ -77,7 +77,7 @@ export default function HomePage() {
       {/* Novidades */}
       <section className="mx-auto max-w-7xl px-4 pt-16" aria-labelledby="novidades">
         <SectionHeading
-          eyebrow="✨ Acabou de chegar"
+          eyebrow="Acabou de chegar"
           title="Novidades"
           subtitle="As últimas novidades para deixar seu pet ainda mais feliz"
           href="/produtos?filtro=novidades"
@@ -93,7 +93,7 @@ export default function HomePage() {
       {/* Avaliações */}
       <section className="mx-auto max-w-7xl px-4 pt-16" aria-labelledby="avaliacoes">
         <SectionHeading
-          eyebrow="💚 Quem compra, recomenda"
+          eyebrow="Quem compra, recomenda"
           title="Tutores felizes, pets mais felizes ainda"
           align="center"
         />
@@ -103,7 +103,7 @@ export default function HomePage() {
       {/* Instagram */}
       <section className="mx-auto max-w-7xl px-4 pt-16" aria-labelledby="instagram">
         <SectionHeading
-          eyebrow="📸 Instagram"
+          eyebrow="Instagram"
           title={`Siga ${storeInfo.instagram}`}
           subtitle="Bastidores, dicas e muita fofura na sua timeline"
           align="center"
@@ -114,8 +114,6 @@ export default function HomePage() {
       {/* Newsletter */}
       <section className="mx-auto max-w-7xl px-4 pt-16" aria-labelledby="newsletter">
         <div className="paw-pattern relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-500 to-brand-700 px-6 py-12 text-center shadow-lift md:px-16">
-          <span className="absolute -left-6 top-4 rotate-[-15deg] text-7xl opacity-30" aria-hidden>🐾</span>
-          <span className="absolute -right-4 bottom-2 rotate-12 text-7xl opacity-30" aria-hidden>💌</span>
           <h2 className="font-display text-3xl font-extrabold text-white md:text-4xl">
             Ganhe <span className="text-sun-300">10% OFF</span> na primeira compra
           </h2>
@@ -131,7 +129,7 @@ export default function HomePage() {
       {/* FAQ resumido */}
       <section className="mx-auto max-w-3xl px-4 pt-16" aria-labelledby="faq">
         <SectionHeading
-          eyebrow="❓ Dúvidas"
+          eyebrow="Dúvidas"
           title="Perguntas frequentes"
           align="center"
           href="/faq"

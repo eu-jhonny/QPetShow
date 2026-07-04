@@ -3,6 +3,7 @@ import { forgotPasswordSchema } from "@/lib/validators";
 import { findUserByEmail } from "@/lib/server/auth";
 import { appendToCollection } from "@/lib/server/store";
 import { rateLimit, clientKey } from "@/lib/server/rate-limit";
+import { sendResetPasswordEmail } from "@/services/email/sendResetPasswordEmail";
 
 export async function POST(request: Request) {
   const limit = rateLimit(clientKey(request, "forgot"), 3, 60_000);
@@ -18,14 +19,18 @@ export async function POST(request: Request) {
 
   const user = await findUserByEmail(parsed.data.email);
   if (user) {
-    // Aqui entra o envio real do e-mail (template em /emails/recuperacao-senha.html)
-    // com token de uso único e expiração curta.
+    const token = crypto.randomUUID();
     await appendToCollection("password-resets", {
       userId: user.id,
-      token: crypto.randomUUID(),
+      token,
       requestedAt: new Date().toISOString(),
       expiresAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
     });
+    try {
+      await sendResetPasswordEmail(user.email, token, user.name);
+    } catch (error) {
+      console.error("Erro ao enviar e-mail de recuperação:", error);
+    }
   }
 
   // Resposta idêntica exista ou não o e-mail — evita enumeração de contas

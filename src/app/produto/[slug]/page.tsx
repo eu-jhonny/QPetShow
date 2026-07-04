@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle2, ShieldCheck, Truck, RotateCcw } from "lucide-react";
-import { products, getProduct, getProductsByCategory } from "@/lib/data/products";
+import { products } from "@/lib/data/products";
+import { getCatalogProduct, getCatalogByCategory } from "@/lib/server/catalog";
 import { getCategory } from "@/lib/data/categories";
 import { formatBRL, discountPercent, installments } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +12,8 @@ import { ProductImage } from "@/components/product/product-image";
 import { BuyBox } from "@/components/product/buy-box";
 import { ProductCarousel } from "@/components/home/product-carousel";
 import { SectionHeading } from "@/components/ui/section-heading";
+
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -22,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getCatalogProduct(slug);
   if (!product) return {};
   return {
     title: product.name,
@@ -41,11 +44,11 @@ export default async function ProdutoPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getCatalogProduct(slug);
   if (!product) notFound();
 
   const category = getCategory(product.category);
-  const related = getProductsByCategory(product.category).filter((p) => p.id !== product.id);
+  const related = (await getCatalogByCategory(product.category)).filter((p) => p.id !== product.id);
   const discount = discountPercent(product.price, product.oldPrice);
 
   const jsonLd = {
@@ -91,7 +94,7 @@ export default async function ProdutoPage({
               {product.badge && <Badge variant={product.badge} />}
               {discount > 0 && <Badge variant="promo">-{discount}%</Badge>}
             </div>
-            <ProductImage product={product} className="aspect-square w-full rounded-[2rem] shadow-soft" emojiClassName="text-[10rem]" priority />
+            <ProductImage product={product} className="aspect-square w-full rounded-[2rem] shadow-soft" iconClassName="size-40" priority />
           </div>
         </div>
 

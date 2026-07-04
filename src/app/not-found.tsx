@@ -1,9 +1,10 @@
 import Link from "next/link";
+import { LogoFull } from "@/components/ui/logo";
 
 export default function NotFound() {
   return (
     <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-4 py-28 text-center">
-      <span className="animate-float text-8xl" aria-hidden>🐕‍🦺</span>
+      <LogoFull className="animate-float" />
       <div>
         <h1 className="font-display text-5xl font-extrabold">404</h1>
         <p className="font-display mt-2 text-2xl font-extrabold">Farejamos por aqui e nada...</p>

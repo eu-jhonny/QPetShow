@@ -1,20 +1,21 @@
 import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/data/products";
+import { BrandIcon } from "@/lib/icon-map";
 import Image from "next/image";
 
 /**
  * Tile visual do produto. Usa foto real quando `product.image` existe
- * (colocar em /public/products), senão renderiza um tile ilustrado da marca.
+ * (colocar em /public/products), senão renderiza um tile com ícone da marca.
  */
 export function ProductImage({
   product,
   className,
-  emojiClassName = "text-7xl",
+  iconClassName = "size-20",
   priority = false,
 }: {
   product: Product;
   className?: string;
-  emojiClassName?: string;
+  iconClassName?: string;
   priority?: boolean;
 }) {
   if (product.image) {
@@ -42,13 +43,17 @@ export function ProductImage({
         className
       )}
     >
-      <div className="paw-pattern absolute inset-0 opacity-60" aria-hidden />
-      <span className={cn("relative drop-shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6", emojiClassName)} aria-hidden>
-        {product.emoji}
-      </span>
+      <div className="paw-pattern absolute inset-0 opacity-40" aria-hidden />
+      <BrandIcon
+        name={product.icon}
+        className={cn(
+          "relative text-white/95 drop-shadow-md transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6",
+          iconClassName
+        )}
+      />
       <span
         aria-hidden
-        className="absolute bottom-2 right-3 font-display text-[10px] font-extrabold uppercase tracking-widest text-white/70"
+        className="absolute bottom-2 right-3 font-display text-[10px] font-extrabold uppercase tracking-widest text-white/80"
       >
         {product.brand}
       </span>

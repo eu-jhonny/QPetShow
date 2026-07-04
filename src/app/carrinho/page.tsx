@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Minus, Plus, Trash2, ArrowRight, TicketPercent } from "lucide-react";
+import { Minus, Plus, Trash2, ArrowRight, TicketPercent, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "@/components/providers/cart-provider";
 import { useToast } from "@/components/providers/toast-provider";
@@ -48,7 +48,9 @@ export default function CarrinhoPage() {
   if (items.length === 0) {
     return (
       <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-4 py-24 text-center">
-        <span className="animate-float text-8xl" aria-hidden>🛒</span>
+        <span className="flex size-24 items-center justify-center rounded-full bg-brand-100 text-brand-500 dark:bg-brand-950 dark:text-brand-300" aria-hidden>
+          <ShoppingCart className="size-11" />
+        </span>
         <div>
           <h1 className="font-display text-3xl font-extrabold">Seu carrinho está vazio</h1>
           <p className="mt-2 text-gray-500 dark:text-gray-400">
@@ -97,7 +99,7 @@ export default function CarrinhoPage() {
               className="flex gap-4 rounded-3xl border border-black/5 bg-white p-4 shadow-soft dark:border-white/10 dark:bg-white/5"
             >
               <Link href={`/produto/${product.slug}`} className="shrink-0">
-                <ProductImage product={product} className="size-24 md:size-28" emojiClassName="text-4xl" />
+                <ProductImage product={product} className="size-24 md:size-28" iconClassName="size-10" />
               </Link>
               <div className="flex min-w-0 flex-1 flex-col">
                 <Link href={`/produto/${product.slug}`} className="line-clamp-2 text-sm font-bold hover:text-brand-600 md:text-base">

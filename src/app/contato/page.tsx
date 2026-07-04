@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, MapPin, MessageCircle, Clock } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Clock, MailCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { contactSchema, type ContactInput } from "@/lib/validators";
@@ -87,7 +87,9 @@ export default function ContatoPage() {
         <div className="rounded-[2rem] border border-black/5 bg-white p-8 shadow-soft lg:col-span-3 dark:border-white/10 dark:bg-white/5">
           {sent ? (
             <div className="flex h-full flex-col items-center justify-center gap-4 py-10 text-center">
-              <span className="text-6xl" aria-hidden>💌</span>
+              <span className="flex size-20 items-center justify-center rounded-full bg-brand-100 text-brand-500 dark:bg-brand-950 dark:text-brand-300" aria-hidden>
+                <MailCheck className="size-10" />
+              </span>
               <h2 className="font-display text-2xl font-extrabold">Mensagem recebida!</h2>
               <p className="max-w-sm text-sm text-gray-500 dark:text-gray-400">
                 Obrigado pelo contato. Nossa equipe responderá no e-mail informado em até 24 horas úteis.

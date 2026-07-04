@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Gift } from "lucide-react";
 import { NewsletterForm } from "./newsletter-form";
 
 const STORAGE_KEY = "qps_popup_dismissed";
@@ -78,10 +78,10 @@ export function NewsletterPopup() {
               <motion.span
                 animate={{ rotate: [0, -8, 8, 0] }}
                 transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
-                className="inline-block text-5xl"
+                className="inline-flex size-16 items-center justify-center rounded-2xl bg-white/20"
                 aria-hidden
               >
-                🎁
+                <Gift className="size-8 text-white" />
               </motion.span>
               <h2 className="font-display mt-3 text-2xl font-extrabold leading-tight">
                 Ganhe <span className="text-sun-300">10% OFF</span> na primeira compra!

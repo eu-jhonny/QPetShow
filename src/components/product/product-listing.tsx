@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { SlidersHorizontal, X } from "lucide-react";
 import type { Product } from "@/lib/data/products";
 import { categories } from "@/lib/data/categories";
+import { BrandIcon } from "@/lib/icon-map";
 import { ProductCard } from "./product-card";
 import { cn, formatBRL } from "@/lib/utils";
 
@@ -87,7 +88,7 @@ export function ProductListing({
                   onChange={() => toggleCategory(cat.slug)}
                   className="size-4 accent-brand-500"
                 />
-                {cat.emoji} {cat.name}
+                <BrandIcon name={cat.icon} className="size-4 text-brand-500" /> {cat.name}
               </label>
             ))}
           </div>

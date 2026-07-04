@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { HelpCircle } from "lucide-react";
 import { FaqAccordion } from "@/components/home/faq-accordion";
 import { faqItems } from "@/lib/data/site";
 import Link from "next/link";
@@ -23,7 +24,9 @@ export default function FaqPage() {
     <div className="mx-auto max-w-3xl px-4 py-12">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <header className="mb-10 text-center">
-        <span className="text-5xl" aria-hidden>❓</span>
+        <span className="inline-flex size-16 items-center justify-center rounded-2xl bg-brand-100 text-brand-600 dark:bg-brand-950 dark:text-brand-300" aria-hidden>
+          <HelpCircle className="size-8" />
+        </span>
         <h1 className="font-display mt-3 text-4xl font-extrabold">Dúvidas frequentes</h1>
         <p className="mt-2 text-gray-500 dark:text-gray-400">
           Tudo o que você precisa saber sobre compras, entregas e segurança.

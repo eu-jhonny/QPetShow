@@ -2,12 +2,14 @@ import { NextResponse } from "next/server";
 import { newsletterSchema } from "@/lib/validators";
 import { readCollection, writeCollection } from "@/lib/server/store";
 import { rateLimit, clientKey } from "@/lib/server/rate-limit";
+import { sendNewsletterWelcome } from "@/lib/email";
 
 interface Lead {
   id: string;
   email: string;
   name?: string;
   source: string;
+  status: "novo" | "contatado" | "convertido";
   consent: boolean;
   createdAt: string;
 }
@@ -36,13 +38,18 @@ export async function POST(request: Request) {
     email,
     name: parsed.data.name,
     source: parsed.data.source,
+    status: "novo",
     consent: parsed.data.consent,
     createdAt: new Date().toISOString(),
   });
   await writeCollection("leads", leads);
 
-  // Aqui entra a integração com CRM/e-mail marketing (RD Station, Mailchimp, Brevo...)
-  // e o disparo do e-mail de boas-vindas com o cupom (template /emails/newsletter-boas-vindas.html)
+  // e-mail de boas-vindas com o cupom (não bloqueia a resposta)
+  try {
+    await sendNewsletterWelcome(email);
+  } catch (error) {
+    console.error("Erro ao enviar e-mail de newsletter:", error);
+  }
 
   return NextResponse.json({ ok: true }, { status: 201 });
 }

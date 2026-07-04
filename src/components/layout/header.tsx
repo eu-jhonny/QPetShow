@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Heart, Menu, ShoppingCart, Truck, User, X, ChevronDown } from "lucide-react";
+import { Heart, Menu, ShoppingCart, Truck, User, X, ChevronDown, Flame, Package, Newspaper, MessageCircle, HelpCircle } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
+import { BrandIcon } from "@/lib/icon-map";
 import { SearchBar } from "./search-bar";
 import { ThemeToggle } from "./theme-toggle";
 import { categories } from "@/lib/data/categories";
@@ -125,8 +126,8 @@ export function Header() {
                       href={`/categorias/${cat.slug}`}
                       className="flex items-center gap-3 rounded-2xl p-3 transition hover:bg-brand-50 dark:hover:bg-white/5"
                     >
-                      <span className={cn("flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br text-xl", cat.gradient)} aria-hidden>
-                        {cat.emoji}
+                      <span className={cn("flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br", cat.gradient)} aria-hidden>
+                        <BrandIcon name={cat.icon} className="size-5 text-white" />
                       </span>
                       <div>
                         <p className="text-sm font-bold text-ink dark:text-white">{cat.name}</p>
@@ -141,16 +142,16 @@ export function Header() {
               <Link
                 key={cat.slug}
                 href={`/categorias/${cat.slug}`}
-                className="rounded-full px-4 py-3 text-sm font-bold transition hover:text-brand-600 dark:hover:text-brand-300"
+                className="flex items-center gap-1.5 rounded-full px-4 py-3 text-sm font-bold transition hover:text-brand-600 dark:hover:text-brand-300"
               >
-                {cat.emoji} {cat.name}
+                <BrandIcon name={cat.icon} className="size-4" /> {cat.name}
               </Link>
             ))}
             <Link
               href="/produtos?filtro=promocao"
-              className="ml-auto rounded-full bg-fire-500 px-4 py-1.5 text-sm font-extrabold text-white transition hover:bg-fire-600"
+              className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-fire-500 px-4 py-1.5 text-sm font-extrabold text-white transition hover:bg-fire-600"
             >
-              🔥 Ofertas
+              <Flame className="size-4" aria-hidden /> Ofertas
             </Link>
           </div>
         </nav>
@@ -197,8 +198,8 @@ export function Header() {
                     onClick={() => setMenuOpen(false)}
                     className="flex items-center gap-3 rounded-2xl px-3 py-3 transition hover:bg-brand-50 dark:hover:bg-white/5"
                   >
-                    <span className={cn("flex size-9 items-center justify-center rounded-xl bg-gradient-to-br text-lg", cat.gradient)} aria-hidden>
-                      {cat.emoji}
+                    <span className={cn("flex size-9 items-center justify-center rounded-xl bg-gradient-to-br", cat.gradient)} aria-hidden>
+                      <BrandIcon name={cat.icon} className="size-5 text-white" />
                     </span>
                     <span className="text-sm font-bold">{cat.name}</span>
                   </Link>
@@ -207,12 +208,12 @@ export function Header() {
 
               <div className="mt-6 flex flex-col gap-1 border-t border-black/5 pt-4 dark:border-white/10">
                 {[
-                  { href: "/conta", label: "Minha conta", emoji: "👤" },
-                  { href: "/conta/pedidos", label: "Meus pedidos", emoji: "📦" },
-                  { href: "/conta/favoritos", label: "Favoritos", emoji: "❤️" },
-                  { href: "/blog", label: "Blog", emoji: "📝" },
-                  { href: "/contato", label: "Fale conosco", emoji: "💬" },
-                  { href: "/faq", label: "Dúvidas frequentes", emoji: "❓" },
+                  { href: "/conta", label: "Minha conta", icon: User },
+                  { href: "/conta/pedidos", label: "Meus pedidos", icon: Package },
+                  { href: "/conta/favoritos", label: "Favoritos", icon: Heart },
+                  { href: "/blog", label: "Blog", icon: Newspaper },
+                  { href: "/contato", label: "Fale conosco", icon: MessageCircle },
+                  { href: "/faq", label: "Dúvidas frequentes", icon: HelpCircle },
                 ].map((item) => (
                   <Link
                     key={item.href}
@@ -220,7 +221,7 @@ export function Header() {
                     onClick={() => setMenuOpen(false)}
                     className="flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-bold transition hover:bg-brand-50 dark:hover:bg-white/5"
                   >
-                    <span aria-hidden>{item.emoji}</span>
+                    <item.icon className="size-4 text-brand-500" aria-hidden />
                     {item.label}
                   </Link>
                 ))}

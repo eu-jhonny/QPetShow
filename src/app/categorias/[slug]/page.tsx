@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { categories, getCategory } from "@/lib/data/categories";
-import { getProductsByCategory } from "@/lib/data/products";
+import { getCatalogByCategory } from "@/lib/server/catalog";
 import { ProductListing } from "@/components/product/product-listing";
+import { BrandIcon } from "@/lib/icon-map";
 import { cn } from "@/lib/utils";
+
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return categories.map((c) => ({ slug: c.slug }));
@@ -32,7 +35,7 @@ export default async function CategoriaPage({
   const category = getCategory(slug);
   if (!category) notFound();
 
-  const items = getProductsByCategory(slug);
+  const items = await getCatalogByCategory(slug);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10">
@@ -43,7 +46,9 @@ export default async function CategoriaPage({
       </nav>
 
       <header className={cn("paw-pattern mb-10 flex items-center gap-5 overflow-hidden rounded-[2rem] bg-gradient-to-br p-8 shadow-lift md:p-10", category.gradient)}>
-        <span className="text-6xl drop-shadow-lg md:text-7xl" aria-hidden>{category.emoji}</span>
+        <span className="flex size-20 shrink-0 items-center justify-center rounded-3xl bg-white/20 backdrop-blur md:size-24" aria-hidden>
+          <BrandIcon name={category.icon} className="size-11 text-white drop-shadow md:size-14" />
+        </span>
         <div>
           <h1 className="font-display text-3xl font-extrabold text-white drop-shadow md:text-5xl">{category.name}</h1>
           <p className="mt-1 text-sm font-medium text-white/85 md:text-base">{category.description}</p>

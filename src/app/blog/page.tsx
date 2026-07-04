@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Newspaper } from "lucide-react";
 import { blogPosts } from "@/lib/data/site";
+import { BrandIcon } from "@/lib/icon-map";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -11,7 +13,9 @@ export default function BlogPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <header className="mb-10 text-center">
-        <span className="text-5xl" aria-hidden>📝</span>
+        <span className="inline-flex size-16 items-center justify-center rounded-2xl bg-brand-100 text-brand-600 dark:bg-brand-950 dark:text-brand-300" aria-hidden>
+          <Newspaper className="size-8" />
+        </span>
         <h1 className="font-display mt-3 text-4xl font-extrabold">Blog QPet</h1>
         <p className="mx-auto mt-2 max-w-xl text-gray-500 dark:text-gray-400">
           Dicas de especialistas para cuidar de quem cuida do seu coração.
@@ -24,8 +28,8 @@ export default function BlogPage() {
             key={post.slug}
             className="group flex flex-col overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift dark:border-white/10 dark:bg-white/5"
           >
-            <div className={cn("paw-pattern flex aspect-[16/10] items-center justify-center bg-gradient-to-br text-7xl", post.gradient)} aria-hidden>
-              <span className="transition-transform duration-500 group-hover:scale-110">{post.emoji}</span>
+            <div className={cn("paw-pattern flex aspect-[16/10] items-center justify-center bg-gradient-to-br", post.gradient)} aria-hidden>
+              <BrandIcon name={post.icon} className="size-16 text-white/90 transition-transform duration-500 group-hover:scale-110" />
             </div>
             <div className="flex flex-1 flex-col p-6">
               <div className="flex items-center gap-2 text-xs font-bold">

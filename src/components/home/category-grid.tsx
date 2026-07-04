@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { categories } from "@/lib/data/categories";
+import { BrandIcon } from "@/lib/icon-map";
 import { cn } from "@/lib/utils";
 
 export function CategoryGrid() {
@@ -22,12 +23,12 @@ export function CategoryGrid() {
           >
             <span
               className={cn(
-                "paw-pattern flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br text-3xl shadow-soft transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6",
+                "paw-pattern flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br shadow-soft transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6",
                 cat.gradient
               )}
               aria-hidden
             >
-              {cat.emoji}
+              <BrandIcon name={cat.icon} className="size-8 text-white drop-shadow" />
             </span>
             <span className="text-xs font-extrabold text-ink group-hover:text-brand-600 md:text-sm dark:text-white dark:group-hover:text-brand-300">
               {cat.name}

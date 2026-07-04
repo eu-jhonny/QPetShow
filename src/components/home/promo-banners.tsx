@@ -2,15 +2,24 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { BrandIcon, type IconKey } from "@/lib/icon-map";
 import { cn } from "@/lib/utils";
 
-const banners = [
+const banners: {
+  href: string;
+  title: string;
+  subtitle: string;
+  discount: string;
+  icon: IconKey;
+  bg: string;
+  badge: string;
+}[] = [
   {
     href: "/categorias/antipulgas",
     title: "Antipulgas",
     subtitle: "Bravecto, NexGard e Scalibor",
     discount: "até 25% OFF",
-    emoji: "🛡️",
+    icon: "shield",
     bg: "from-[#12290e] to-[#1e4a16]",
     badge: "bg-brand-400 text-ink",
   },
@@ -19,7 +28,7 @@ const banners = [
     title: "Areia & Tapetes",
     subtitle: "Pipicat, Zee.Pad e Tapeco",
     discount: "até 40% OFF",
-    emoji: "🧻",
+    icon: "layers",
     bg: "from-brand-600 to-emerald-700",
     badge: "bg-sun-400 text-ink",
   },
@@ -28,7 +37,7 @@ const banners = [
     title: "Sachês & Petiscos",
     subtitle: "Finotrato, Golden e PetProb",
     discount: "até 14% OFF",
-    emoji: "🍖",
+    icon: "drumstick",
     bg: "from-sun-500 to-orange-600",
     badge: "bg-ink text-white",
   },
@@ -52,9 +61,10 @@ export function PromoBanners() {
               banner.bg
             )}
           >
-            <span className="absolute -bottom-4 -right-2 text-8xl opacity-90 drop-shadow-xl transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-12" aria-hidden>
-              {banner.emoji}
-            </span>
+            <BrandIcon
+              name={banner.icon}
+              className="absolute -bottom-3 -right-2 size-32 text-white/15 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-12"
+            />
             <div className="relative z-10">
               <h3 className="font-display text-2xl font-extrabold text-white drop-shadow">{banner.title}</h3>
               <p className="text-sm font-medium text-white/80">{banner.subtitle}</p>
