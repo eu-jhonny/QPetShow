@@ -12,7 +12,7 @@ const patchSchema = z.object({
   stock: z.number().int().min(0).optional(),
   description: z.string().trim().min(10).max(2000).optional(),
   badge: z.enum(["promo", "novo", "mais-vendido"]).nullable().optional(),
-  image: z.string().url().nullable().optional(),
+  image: z.string().max(400).nullable().optional(),
   active: z.boolean().optional(),
 });
 

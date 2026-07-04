@@ -23,7 +23,7 @@ const productSchema = z.object({
   icon: z.enum(iconKeys).default("paw"),
   gradient: z.string().default("from-brand-100 to-brand-300"),
   badge: z.enum(["promo", "novo", "mais-vendido"]).optional(),
-  image: z.string().url().optional().or(z.literal("")),
+  image: z.string().max(400).optional().or(z.literal("")),
   rating: z.number().min(0).max(5).optional(),
   reviews: z.number().int().min(0).optional(),
 });

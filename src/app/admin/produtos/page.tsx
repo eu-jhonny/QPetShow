@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, X, Trash2, Pencil, Package, Save } from "lucide-react";
+import { Plus, X, Trash2, Pencil, Package, Save, Upload, ImagePlus } from "lucide-react";
 import { useToast } from "@/components/providers/toast-provider";
 import { categories } from "@/lib/data/categories";
 import { formatBRL, cn } from "@/lib/utils";
@@ -34,7 +35,26 @@ export default function AdminProdutosPage() {
   const [editing, setEditing] = useState<Product | null>(null);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [query, setQuery] = useState("");
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  async function uploadImage(file: File) {
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/admin/upload?folder=products", { method: "POST", body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setForm((f) => ({ ...f, image: data.url }));
+      toast("Imagem enviada!");
+    } catch (err) {
+      toast(err instanceof Error ? err.message : "Erro no upload", "error");
+    } finally {
+      setUploading(false);
+    }
+  }
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -205,7 +225,29 @@ export default function AdminProdutosPage() {
                     <option value="mais-vendido">Mais vendido</option>
                   </select>
                 </Field>
-                <Field label="URL da imagem (opcional)"><input value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} placeholder="https://..." className={inputCls} /></Field>
+                <Field label="Imagem do produto (opcional)">
+                  <div className="flex items-start gap-3">
+                    <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && uploadImage(e.target.files[0])} />
+                    <button
+                      type="button"
+                      onClick={() => fileRef.current?.click()}
+                      disabled={uploading}
+                      className="flex size-20 shrink-0 flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-gray-300 text-gray-400 transition hover:border-brand-400 hover:text-brand-500 disabled:opacity-60 dark:border-white/15"
+                    >
+                      {form.image ? (
+                        <Image src={form.image} alt="Prévia" width={80} height={80} className="size-full rounded-lg object-cover" />
+                      ) : uploading ? (
+                        <Upload className="size-5 animate-pulse" aria-hidden />
+                      ) : (
+                        <ImagePlus className="size-5" aria-hidden />
+                      )}
+                    </button>
+                    <div className="flex-1">
+                      <input value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} placeholder="Envie um arquivo ou cole uma URL" className={inputCls} />
+                      <p className="mt-1 text-[11px] text-gray-400">Clique no quadrado para enviar do computador.</p>
+                    </div>
+                  </div>
+                </Field>
                 <Field label="Descrição"><textarea rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={cn(inputCls, "h-auto py-2")} /></Field>
                 <button onClick={save} disabled={saving} className="mt-2 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand-500 text-sm font-extrabold text-white transition hover:bg-brand-600 disabled:opacity-60">
                   <Save className="size-4" aria-hidden /> {saving ? "Salvando…" : "Salvar produto"}

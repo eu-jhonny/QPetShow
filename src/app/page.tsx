@@ -1,5 +1,5 @@
-import { heroBanners } from "@/lib/data/banners";
 import type { Metadata } from "next";
+import { getActiveBanners } from "@/lib/server/banners";
 import { HeroCarousel } from "@/components/home/hero-carousel";
 import { CategoryGrid } from "@/components/home/category-grid";
 import { ProductCarousel } from "@/components/home/product-carousel";
@@ -20,10 +20,13 @@ export const metadata: Metadata = {
     "Loja virtual da QPet Shop: antipulgas com até 25% OFF, areia e tapetes com até 40% OFF, sachês e petiscos, rações premium e muito mais. Frete grátis acima de R$ 199!",
 };
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const banners = await getActiveBanners();
   return (
     <>
-      <HeroCarousel banners={heroBanners} />
+      <HeroCarousel banners={banners} />
 
       {/* Categorias */}
       <section className="mx-auto max-w-7xl px-4 pt-14" aria-labelledby="categorias">

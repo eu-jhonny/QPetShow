@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/components/providers/cart-provider";
 import { FavoritesProvider } from "@/components/providers/favorites-provider";
 import { ToastProvider } from "@/components/providers/toast-provider";
+import { HideOnAdmin } from "@/components/layout/store-chrome";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { MobileNav } from "@/components/layout/mobile-nav";
@@ -75,13 +76,15 @@ export default function RootLayout({
         <ToastProvider>
           <CartProvider>
             <FavoritesProvider>
-              <Header />
+              <HideOnAdmin><Header /></HideOnAdmin>
               <main id="conteudo" className="flex-1">
                 {children}
               </main>
-              <Footer />
-              <MobileNav />
-              <NewsletterPopup />
+              <HideOnAdmin>
+                <Footer />
+                <MobileNav />
+                <NewsletterPopup />
+              </HideOnAdmin>
             </FavoritesProvider>
           </CartProvider>
         </ToastProvider>

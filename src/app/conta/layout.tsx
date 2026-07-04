@@ -1,4 +1,5 @@
-import { getSession } from "@/lib/server/auth";
+import Image from "next/image";
+import { getSession, getUserById } from "@/lib/server/auth";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { AccountNavLink } from "@/components/auth/account-nav-link";
 
@@ -6,14 +7,19 @@ export const dynamic = "force-dynamic";
 
 export default async function ContaLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();
+  const user = session ? await getUserById(session.sub) : null;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10">
       <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
         <aside className="h-fit rounded-3xl border border-black/5 bg-white p-5 shadow-soft lg:sticky lg:top-40 dark:border-white/10 dark:bg-white/5">
           <div className="mb-5 flex items-center gap-3 border-b border-black/5 pb-5 dark:border-white/10">
-            <span className="flex size-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-lg font-extrabold text-white" aria-hidden>
-              {session?.name?.charAt(0).toUpperCase() ?? "?"}
+            <span className="flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-lg font-extrabold text-white" aria-hidden>
+              {user?.avatar ? (
+                <Image src={user.avatar} alt="" width={48} height={48} className="size-full object-cover" />
+              ) : (
+                session?.name?.charAt(0).toUpperCase() ?? "?"
+              )}
             </span>
             <div className="min-w-0">
               <p className="truncate font-extrabold">{session?.name ?? "Visitante"}</p>

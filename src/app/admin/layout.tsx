@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Lock } from "lucide-react";
 import { getSession, getAdminSession } from "@/lib/server/auth";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
+import { AdminTopbar } from "@/components/admin/admin-topbar";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +15,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   if (!admin) {
     return (
       <div className="mx-auto flex max-w-lg flex-col items-center gap-4 px-4 py-24 text-center">
-        <span className="text-5xl" aria-hidden>🔒</span>
+        <span className="flex size-16 items-center justify-center rounded-2xl bg-fire-100 text-fire-600 dark:bg-fire-900/30" aria-hidden>
+          <Lock className="size-8" />
+        </span>
         <h1 className="font-display text-2xl font-extrabold">Acesso restrito</h1>
         <p className="text-gray-500 dark:text-gray-400">
           Sua conta ({session.email}) não tem permissão de administrador. Adicione seu e-mail em
@@ -27,10 +31,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div className="mx-auto max-w-[1400px] px-4 py-8">
-      <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
-        <AdminSidebar adminName={admin.name} />
-        <div className="min-w-0 flex-1">{children}</div>
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0f0b]">
+      <AdminTopbar adminName={admin.name} />
+      <div className="mx-auto max-w-[1400px] px-4 py-6">
+        <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
+          <AdminSidebar />
+          <div className="min-w-0 flex-1">{children}</div>
+        </div>
       </div>
     </div>
   );
