@@ -51,6 +51,7 @@ export interface Order {
   paymentMethod: "pix" | "cartao" | "boleto";
   status: OrderStatus;
   trackingCode?: string;
+  adminNote?: string;
   timeline: { status: OrderStatus; at: string }[];
   createdAt: string;
   updatedAt: string;
@@ -120,6 +121,19 @@ export async function updateOrderStatus(
     timeline: [...orders[idx].timeline, { status, at: now }],
     updatedAt: now,
   };
+  await writeCollection(COLLECTION, orders);
+  return orders[idx];
+}
+
+/** Atualiza campos avulsos do pedido (ex.: nota do admin, rastreio) sem mudar status. */
+export async function updateOrderFields(
+  id: string,
+  patch: Partial<Pick<Order, "adminNote" | "trackingCode">>
+): Promise<Order | null> {
+  const orders = await readCollection<Order>(COLLECTION);
+  const idx = orders.findIndex((o) => o.id === id || o.code === id);
+  if (idx === -1) return null;
+  orders[idx] = { ...orders[idx], ...patch, updatedAt: new Date().toISOString() };
   await writeCollection(COLLECTION, orders);
   return orders[idx];
 }

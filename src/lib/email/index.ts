@@ -1,10 +1,22 @@
-import { getResend, isEmailEnabled } from "@/lib/resend";
+import { getResend } from "@/lib/resend";
 import { getSettings } from "@/lib/server/settings";
 import * as t from "./templates";
+
+const BREVO = () => process.env.BREVO_API_KEY ?? "";
+const RESEND = () => process.env.RESEND_API_KEY ?? process.env.EMAIL_API_KEY ?? "";
+
+/** Há algum provedor de e-mail configurado? */
+export function isEmailEnabled() {
+  return BREVO().length > 0 || RESEND().length > 0;
+}
 
 async function from() {
   const s = await getSettings().catch(() => null);
   return s?.emailFrom || process.env.EMAIL_FROM || "onboarding@resend.dev";
+}
+
+function fromName() {
+  return process.env.EMAIL_FROM_NAME || "QPet Shop";
 }
 
 async function adminEmail() {
@@ -23,19 +35,47 @@ interface SendArgs {
   html: string;
 }
 
+/** Envio via Brevo (transacional). O remetente precisa estar verificado na conta. */
+async function sendViaBrevo(fromEmail: string, { to, subject, html }: SendArgs) {
+  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: {
+      "api-key": BREVO(),
+      "Content-Type": "application/json",
+      accept: "application/json",
+    },
+    body: JSON.stringify({
+      sender: { email: fromEmail, name: fromName() },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html,
+    }),
+  });
+  if (res.ok) return { ok: true as const };
+  const data = await res.json().catch(() => ({}));
+  const msg = (data as { message?: string }).message ?? `HTTP ${res.status}`;
+  console.error(`[email] Brevo recusou "${subject}" para ${to}:`, msg);
+  return { ok: false as const, error: msg };
+}
+
 /**
- * Envia um e-mail via Resend. Nunca lança: se não houver chave ou a API
- * falhar, apenas registra no log e retorna { ok:false } — o fluxo do usuário
- * (cadastro, checkout) não deve quebrar por causa de e-mail.
+ * Envia um e-mail. Usa Brevo se BREVO_API_KEY estiver definida, senão Resend.
+ * Nunca lança: em caso de falha, registra no log e retorna { ok:false } — o
+ * fluxo do usuário (cadastro, checkout) não quebra por causa de e-mail.
  */
 export async function sendEmail({ to, subject, html }: SendArgs): Promise<{ ok: boolean; error?: string }> {
-  const resend = getResend();
-  if (!resend) {
-    console.warn(`[email] desabilitado (sem RESEND_API_KEY) — não enviado: "${subject}" para ${to}`);
-    return { ok: false, error: "email-disabled" };
-  }
+  const fromEmail = await from();
+
   try {
-    const { error } = await resend.emails.send({ from: await from(), to, subject, html });
+    if (BREVO()) {
+      return await sendViaBrevo(fromEmail, { to, subject, html });
+    }
+    const resend = getResend();
+    if (!resend) {
+      console.warn(`[email] desabilitado (sem provedor) — não enviado: "${subject}" para ${to}`);
+      return { ok: false, error: "email-disabled" };
+    }
+    const { error } = await resend.emails.send({ from: fromEmail, to, subject, html });
     if (error) {
       console.error(`[email] Resend recusou "${subject}" para ${to}:`, error);
       return { ok: false, error: String(error.message ?? error) };
@@ -46,8 +86,6 @@ export async function sendEmail({ to, subject, html }: SendArgs): Promise<{ ok: 
     return { ok: false, error: err instanceof Error ? err.message : "unknown" };
   }
 }
-
-export { isEmailEnabled };
 
 // ---- Atalhos de alto nível (cada um monta o template e envia) ----
 
