@@ -21,8 +21,13 @@ export async function readCollection<T>(name: string): Promise<T[]> {
 }
 
 export async function writeCollection<T>(name: string, items: T[]): Promise<void> {
+  console.log("Tentando salvar", name);
   await ensureDir();
-  await fs.writeFile(path.join(DATA_DIR, `${name}.json`), JSON.stringify(items, null, 2), "utf-8");
+  await fs.writeFile(
+    path.join(DATA_DIR, `${name}.json`),
+    JSON.stringify(items, null, 2),
+    "utf-8"
+  );
 }
 
 export async function appendToCollection<T>(name: string, item: T): Promise<void> {
