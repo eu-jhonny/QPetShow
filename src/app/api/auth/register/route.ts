@@ -1,3 +1,14 @@
+import { NextResponse } from "next/server";
+import { registerSchema } from "@/lib/validators";
+import {
+  createUser,
+  findUserByEmail,
+  createSessionToken,
+  setSessionCookie,
+} from "@/lib/server/auth";
+import { rateLimit, clientKey } from "@/lib/server/rate-limit";
+import { sendWelcomeEmail } from "@/services/email/sendWelcomeEmail";
+
 export async function POST(request: Request) {
   try {
     const limit = rateLimit(clientKey(request, "register"), 5, 60_000);
