@@ -52,6 +52,10 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     ...(d.description !== undefined && { description: d.description }),
     ...(d.badge !== undefined && { badge: d.badge ?? undefined }),
     ...(d.image !== undefined && { image: d.image ?? undefined }),
+    ...(d.icon !== undefined && { icon: d.icon }),
+    ...(d.features !== undefined && { features: d.features }),
+    ...(d.rating !== undefined && { rating: d.rating }),
+    ...(d.reviews !== undefined && { reviews: d.reviews }),
   };
   await upsertProduct(updated);
   return NextResponse.json({ product: updated });

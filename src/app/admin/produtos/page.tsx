@@ -20,11 +20,27 @@ interface Product {
   description: string;
   badge?: string;
   image?: string;
+  icon?: string;
+  features?: string[];
+  rating?: number;
+  reviews?: number;
 }
+
+const ICONS = [
+  "dog", "cat", "shield", "layers", "drumstick", "toy", "bone", "pill",
+  "beef", "bed", "paw", "droplets", "bath", "sparkles", "zap", "utensils",
+];
+
+const ICON_LABELS: Record<string, string> = {
+  dog: "Cachorro", cat: "Gato", shield: "Proteção", layers: "Camadas/Areia",
+  drumstick: "Sachê/Petisco", toy: "Brinquedo", bone: "Osso/Acessório", pill: "Remédio",
+  beef: "Carne/Bifinho", bed: "Cama", paw: "Patinha", droplets: "Água/Higiene",
+  bath: "Banho", sparkles: "Novidade", zap: "Energia", utensils: "Comedouro",
+};
 
 const emptyForm = {
   name: "", brand: "", category: "cachorros", price: "", oldPrice: "", stock: "",
-  description: "", badge: "", image: "",
+  description: "", badge: "", image: "", icon: "paw", features: "", rating: "5", reviews: "0",
 };
 
 export default function AdminProdutosPage() {
@@ -80,6 +96,8 @@ export default function AdminProdutosPage() {
       name: p.name, brand: p.brand, category: p.category,
       price: String(p.price), oldPrice: p.oldPrice ? String(p.oldPrice) : "",
       stock: String(p.stock), description: p.description, badge: p.badge ?? "", image: p.image ?? "",
+      icon: p.icon ?? "paw", features: (p.features ?? []).join("\n"),
+      rating: String(p.rating ?? 5), reviews: String(p.reviews ?? 0),
     });
     setModalOpen(true);
   }
@@ -87,10 +105,15 @@ export default function AdminProdutosPage() {
   async function save() {
     setSaving(true);
     try {
+      const features = form.features.split("\n").map((f) => f.trim()).filter(Boolean);
       const payload = {
         name: form.name, brand: form.brand, category: form.category,
         price: Number(form.price), stock: Number(form.stock),
         description: form.description,
+        icon: form.icon,
+        features,
+        rating: Number(form.rating) || 5,
+        reviews: Number(form.reviews) || 0,
         ...(form.oldPrice ? { oldPrice: Number(form.oldPrice) } : {}),
         ...(form.badge ? { badge: form.badge } : {}),
         ...(form.image ? { image: form.image } : {}),
@@ -248,7 +271,19 @@ export default function AdminProdutosPage() {
                     </div>
                   </div>
                 </Field>
+                <div className="grid grid-cols-3 gap-3">
+                  <Field label="Ícone (sem foto)">
+                    <select value={form.icon} onChange={(e) => setForm({ ...form, icon: e.target.value })} className={inputCls}>
+                      {ICONS.map((ic) => <option key={ic} value={ic}>{ICON_LABELS[ic] ?? ic}</option>)}
+                    </select>
+                  </Field>
+                  <Field label="Avaliação (0-5)"><input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={(e) => setForm({ ...form, rating: e.target.value })} className={inputCls} /></Field>
+                  <Field label="Nº avaliações"><input type="number" value={form.reviews} onChange={(e) => setForm({ ...form, reviews: e.target.value })} className={inputCls} /></Field>
+                </div>
                 <Field label="Descrição"><textarea rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={cn(inputCls, "h-auto py-2")} /></Field>
+                <Field label="Características (uma por linha)">
+                  <textarea rows={4} value={form.features} onChange={(e) => setForm({ ...form, features: e.target.value })} placeholder={"Ex:\nProteção por 12 semanas\nDose única mastigável"} className={cn(inputCls, "h-auto py-2")} />
+                </Field>
                 <button onClick={save} disabled={saving} className="mt-2 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand-500 text-sm font-extrabold text-white transition hover:bg-brand-600 disabled:opacity-60">
                   <Save className="size-4" aria-hidden /> {saving ? "Salvando…" : "Salvar produto"}
                 </button>

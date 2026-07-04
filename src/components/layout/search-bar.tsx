@@ -71,7 +71,7 @@ export function SearchBar({ className, autoFocus = false }: { className?: string
         <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-3xl border border-black/5 bg-white shadow-lift dark:border-white/10 dark:bg-[#12190f]">
           {results.length === 0 ? (
             <div className="flex flex-col items-center gap-2 px-6 py-8 text-center">
-              <span className="text-3xl" aria-hidden>🔍</span>
+              <Search className="size-7 text-gray-300" aria-hidden />
               <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">
                 Nenhum produto encontrado para “{query}”
               </p>

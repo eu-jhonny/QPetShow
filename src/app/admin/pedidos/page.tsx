@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { RefreshCw, X, Package, MapPin, User, Clock } from "lucide-react";
+import { RefreshCw, X, Package, MapPin, User, Clock, Search, Mail, StickyNote, Printer, Truck } from "lucide-react";
 import { useToast } from "@/components/providers/toast-provider";
 import { formatBRL, cn } from "@/lib/utils";
 
@@ -21,6 +21,7 @@ interface Order {
   paymentMethod: string;
   status: OrderStatus;
   trackingCode?: string;
+  adminNote?: string;
   timeline: { status: OrderStatus; at: string }[];
   createdAt: string;
 }
@@ -50,13 +51,17 @@ export default function AdminPedidosPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<OrderStatus | "todos">("todos");
+  const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Order | null>(null);
   const [updating, setUpdating] = useState(false);
+  const [tracking, setTracking] = useState("");
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/orders");
+      const res = await fetch("/api/orders", { cache: "no-store" });
       const data = await res.json();
       if (res.ok) setOrders(data.orders);
     } finally {
@@ -66,13 +71,20 @@ export default function AdminPedidosPage() {
 
   useEffect(() => { load(); }, [load]);
 
+  function openOrder(o: Order) {
+    setSelected(o);
+    setTracking(o.trackingCode ?? "");
+    setNote(o.adminNote ?? "");
+  }
+
   async function updateStatus(order: Order, status: OrderStatus) {
+    if (status === "cancelado" && !confirm(`Cancelar o pedido #${order.code}?`)) return;
     setUpdating(true);
     try {
       const res = await fetch(`/api/orders/${order.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status }),
+        body: JSON.stringify({ status, ...(status === "enviado" && tracking.trim() ? { trackingCode: tracking.trim() } : {}) }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
@@ -86,7 +98,28 @@ export default function AdminPedidosPage() {
     }
   }
 
-  const filtered = filter === "todos" ? orders : orders.filter((o) => o.status === filter);
+  async function resendEmail(order: Order) {
+    setBusy(true);
+    try {
+      const res = await fetch(`/api/orders/${order.id}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "resend" }) });
+      const data = await res.json();
+      toast(data.ok ? "E-mail de confirmação reenviado!" : `Falha no envio: ${data.error ?? "verifique o Resend"}`, data.ok ? "success" : "error");
+    } finally { setBusy(false); }
+  }
+
+  async function saveNote(order: Order) {
+    setBusy(true);
+    try {
+      const res = await fetch(`/api/orders/${order.id}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "note", note }) });
+      const data = await res.json();
+      if (res.ok) { setSelected(data.order); setOrders((prev) => prev.map((o) => (o.id === order.id ? data.order : o))); toast("Nota salva"); }
+    } finally { setBusy(false); }
+  }
+
+  const q = query.trim().toLowerCase();
+  const filtered = orders
+    .filter((o) => filter === "todos" || o.status === filter)
+    .filter((o) => !q || o.code.toLowerCase().includes(q) || o.customer.name.toLowerCase().includes(q) || o.customer.email.toLowerCase().includes(q));
   const pendingCount = orders.filter((o) => o.status === "pendente").length;
 
   return (
@@ -105,6 +138,16 @@ export default function AdminPedidosPage() {
           <RefreshCw className={cn("size-4", loading && "animate-spin")} aria-hidden /> Atualizar
         </button>
       </header>
+
+      <div className="relative mb-4 max-w-md">
+        <Search className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-gray-400" aria-hidden />
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Buscar por código, cliente ou e-mail…"
+          className="h-11 w-full rounded-full border-2 border-gray-200 bg-white pl-10 pr-4 text-sm focus:border-brand-500 focus:outline-none dark:border-white/15 dark:bg-white/5"
+        />
+      </div>
 
       <div className="no-scrollbar mb-5 flex gap-2 overflow-x-auto">
         {FILTERS.map((f) => (
@@ -145,7 +188,7 @@ export default function AdminPedidosPage() {
               {filtered.map((o) => (
                 <tr
                   key={o.id}
-                  onClick={() => setSelected(o)}
+                  onClick={() => openOrder(o)}
                   className="cursor-pointer transition hover:bg-brand-50/50 dark:hover:bg-white/5"
                 >
                   <td className="px-5 py-3.5 font-extrabold">#{o.code}</td>
@@ -235,8 +278,37 @@ export default function AdminPedidosPage() {
                     ))}
                   </ul>
                 </div>
+
+                {/* Código de rastreio (ao enviar) */}
+                {(selected.status === "pago" || selected.status === "enviado") && (
+                  <div className="rounded-2xl bg-gray-50 p-4 dark:bg-white/5">
+                    <label className="flex items-center gap-2 font-bold"><Truck className="size-4 text-brand-500" aria-hidden /> Código de rastreio</label>
+                    <input
+                      value={tracking}
+                      onChange={(e) => setTracking(e.target.value)}
+                      placeholder="Ex: BR123456789BR (deixe vazio p/ gerar)"
+                      className="mt-2 h-10 w-full rounded-xl border-2 border-gray-200 bg-white px-3 text-sm focus:border-brand-500 focus:outline-none dark:border-white/15 dark:bg-black/20"
+                    />
+                  </div>
+                )}
+
+                {/* Nota interna */}
+                <div className="rounded-2xl bg-gray-50 p-4 dark:bg-white/5">
+                  <label className="flex items-center gap-2 font-bold"><StickyNote className="size-4 text-brand-500" aria-hidden /> Nota interna</label>
+                  <textarea
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    rows={2}
+                    placeholder="Anotações do pedido (não visível ao cliente)"
+                    className="mt-2 w-full rounded-xl border-2 border-gray-200 bg-white p-3 text-sm focus:border-brand-500 focus:outline-none dark:border-white/15 dark:bg-black/20"
+                  />
+                  <button onClick={() => saveNote(selected)} disabled={busy} className="mt-2 rounded-full bg-ink px-4 py-1.5 text-xs font-extrabold text-white transition hover:bg-black disabled:opacity-60 dark:bg-white dark:text-ink">
+                    Salvar nota
+                  </button>
+                </div>
               </div>
 
+              {/* Ações de status */}
               {nextActions[selected.status].length > 0 && (
                 <div className="mt-6 flex flex-col gap-2">
                   {nextActions[selected.status].map((action) => (
@@ -256,6 +328,16 @@ export default function AdminPedidosPage() {
                   ))}
                 </div>
               )}
+
+              {/* Ações extras */}
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                <button onClick={() => resendEmail(selected)} disabled={busy} className="inline-flex h-11 items-center justify-center gap-2 rounded-full border-2 border-gray-200 text-sm font-bold transition hover:border-brand-400 disabled:opacity-60 dark:border-white/15">
+                  <Mail className="size-4" aria-hidden /> Reenviar e-mail
+                </button>
+                <button onClick={() => window.print()} className="inline-flex h-11 items-center justify-center gap-2 rounded-full border-2 border-gray-200 text-sm font-bold transition hover:border-brand-400 dark:border-white/15">
+                  <Printer className="size-4" aria-hidden /> Imprimir
+                </button>
+              </div>
             </motion.aside>
           </>
         )}
