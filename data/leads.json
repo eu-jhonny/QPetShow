@@ -20,5 +20,13 @@
     "status": "novo",
     "consent": true,
     "createdAt": "2026-07-04T14:12:00.815Z"
+  },
+  {
+    "id": "89e0db02-a5c0-425f-86d3-0fcf92c0762f",
+    "email": "cliente_real_1783192252072@gmail.com",
+    "source": "popup",
+    "status": "novo",
+    "consent": true,
+    "createdAt": "2026-07-04T19:10:52.380Z"
   }
 ]

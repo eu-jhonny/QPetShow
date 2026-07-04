@@ -40,5 +40,12 @@
     "email": "srtutty123@gmail.com",
     "passwordHash": "$2b$12$D1NNUuhwBUKEfAH6OO.WfOT6/pEkA8mEISJot4a9eRoqJ1iLTe3xq",
     "createdAt": "2026-07-04T13:52:12.853Z"
+  },
+  {
+    "id": "87b7dcaa-8c46-4a08-bb63-4785e4c393ac",
+    "name": "Cliente Real",
+    "email": "cad_1783192252969@gmail.com",
+    "passwordHash": "$2b$12$GhskxDOODjB/u5ipq/j1xukYId9h6CE37vAQegteiyPn5IV.ZilFS",
+    "createdAt": "2026-07-04T19:10:53.862Z"
   }
 ]

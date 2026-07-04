@@ -127,22 +127,35 @@ PIX/boleto geram código fictício). Para pagamento real:
 
 ---
 
-## 6. (Produção séria) Banco de dados com Supabase + Prisma
+## 6. Banco de dados na Vercel (Supabase) — OBRIGATÓRIO
 
-Em dev a loja grava em arquivos JSON na pasta `/data`. Isso **não** funciona bem
-na Vercel (sistema de arquivos efêmero). Para produção, migre para Postgres:
+Em desenvolvimento a loja grava em arquivos JSON (`/data`). Na **Vercel** o
+sistema de arquivos é **somente leitura**, então sem banco **nada que grava
+funciona** (cadastro, pedido, cancelar, editar produto, etc.).
 
-1. Crie um projeto no **Supabase** e copie a **Connection String** (Postgres).
-2. Coloque em `DATABASE_URL` (lembre de URL-encodar caracteres especiais da
-   senha: `@` vira `%40`).
-3. Rode as migrações:
-   ```bash
-   npx prisma migrate deploy
-   npx prisma generate
+O projeto já vem pronto para isso: quando roda na Vercel (ou com
+`STORAGE=postgres`), o armazenamento usa automaticamente uma tabela
+`qps_store` no **Postgres do Supabase** (criada sozinha na primeira gravação).
+Você **não precisa** rodar migração — só configurar a conexão:
+
+1. No **Supabase** → **Connect** (botão no topo) → aba **Connection string** →
+   escolha **Transaction pooler** (recomendado para serverless/Vercel).
+   A string tem este formato:
    ```
-   O schema já está em `prisma/schema.prisma`.
-4. Troque as funções de `src/lib/server/*` (que hoje usam JSON) por chamadas
-   Prisma. O modelo de dados já é equivalente (User, Product, Order, Lead…).
+   postgresql://postgres.SEU_REF:SUA_SENHA@aws-0-REGIAO.pooler.supabase.com:6543/postgres
+   ```
+   > Use o **pooler** (`...pooler.supabase.com:6543`), NÃO a conexão direta
+   > (`db.xxx.supabase.co:5432`), que não funciona bem na Vercel.
+2. Na **Vercel** → seu projeto → **Settings → Environment Variables**, coloque
+   essa string em `DATABASE_URL` (URL-encode a senha: `@` vira `%40`).
+3. Redeploy. Pronto — pedidos, produtos, leads e tudo o mais passam a persistir.
+
+> Para testar localmente contra o Supabase: no `.env` local, ponha a mesma
+> `DATABASE_URL` (pooler) e adicione `STORAGE=postgres`. Sem isso, o local
+> continua usando os arquivos JSON (mais rápido para desenvolver).
+
+O `prisma/schema.prisma` continua disponível caso queira migrar para um modelo
+relacional no futuro, mas **não é necessário** — a tabela KV já resolve.
 
 ---
 
