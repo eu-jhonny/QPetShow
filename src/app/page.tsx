@@ -1,3 +1,4 @@
+import { heroBanners } from "@/lib/data/banners";
 import type { Metadata } from "next";
 import { HeroCarousel } from "@/components/home/hero-carousel";
 import { CategoryGrid } from "@/components/home/category-grid";
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <HeroCarousel />
+      <HeroCarousel banners={heroBanners} />
 
       {/* Categorias */}
       <section className="mx-auto max-w-7xl px-4 pt-14" aria-labelledby="categorias">
