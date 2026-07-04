@@ -52,5 +52,47 @@
     ],
     "createdAt": "2026-07-04T02:36:16.607Z",
     "updatedAt": "2026-07-04T02:36:16.637Z"
+  },
+  {
+    "userId": "1ce813bf-ab8e-4a51-ae4c-da5ab454d225",
+    "customer": {
+      "name": "Maria Nova",
+      "email": "contato@qpetshop.com.br",
+      "phone": "(11) 91508-5219"
+    },
+    "address": {
+      "cep": "06800-000",
+      "street": "Av Aimara",
+      "number": "592",
+      "neighborhood": "Pirajussara",
+      "city": "Embu das Artes",
+      "state": "SP"
+    },
+    "items": [
+      {
+        "productId": "p01",
+        "slug": "bravecto-caes-10-20kg",
+        "name": "Bravecto Antipulgas e Carrapatos para Cães 10-20kg",
+        "brand": "Bravecto",
+        "quantity": 2,
+        "price": 189.9
+      }
+    ],
+    "subtotal": 379.8,
+    "shipping": 0,
+    "discount": 18.990000000000002,
+    "total": 360.81,
+    "paymentMethod": "pix",
+    "id": "2b47f903-ebe7-4d07-ace3-a4343640adfb",
+    "code": "QPS-895607",
+    "status": "pendente",
+    "timeline": [
+      {
+        "status": "pendente",
+        "at": "2026-07-04T14:10:39.077Z"
+      }
+    ],
+    "createdAt": "2026-07-04T14:10:39.077Z",
+    "updatedAt": "2026-07-04T14:10:39.077Z"
   }
 ]

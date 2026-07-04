@@ -12,5 +12,13 @@
     "source": "popup",
     "consent": true,
     "createdAt": "2026-07-03T21:26:06.386Z"
+  },
+  {
+    "id": "a1c0d631-382d-4717-8003-c9bccb1585ec",
+    "email": "cliente_1783174320223@teste.com",
+    "source": "popup",
+    "status": "novo",
+    "consent": true,
+    "createdAt": "2026-07-04T14:12:00.815Z"
   }
 ]

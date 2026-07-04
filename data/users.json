@@ -33,5 +33,12 @@
     "email": "contato@qpetshop.com.br",
     "passwordHash": "$2b$12$8w7iz4IeN0k.900FR5pai.qEil0jMuo0rnr5.n3Hpub4PtFFGi3N6",
     "createdAt": "2026-07-04T02:36:06.778Z"
+  },
+  {
+    "id": "3b571f03-eb42-4566-808e-1bf7c28ec523",
+    "name": "joao vitor",
+    "email": "srtutty123@gmail.com",
+    "passwordHash": "$2b$12$D1NNUuhwBUKEfAH6OO.WfOT6/pEkA8mEISJot4a9eRoqJ1iLTe3xq",
+    "createdAt": "2026-07-04T13:52:12.853Z"
   }
 ]
