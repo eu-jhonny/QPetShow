@@ -1,3 +1,4 @@
+import type { IconKey } from "@/lib/icon-map";
 export const brands = [
   "Golden", "Premier", "Bravecto", "NexGard", "Scalibor", "Whiskas",
   "Pipicat", "Zee.Pad", "Tapeco", "Finotrato", "KONG", "PetProb",
@@ -14,14 +15,14 @@ export interface Testimonial {
 export const testimonials: Testimonial[] = [
   {
     name: "Mariana Silva",
-    pet: "tutora do Thor 🐶",
+    pet: "tutora do Thor",
     avatar: "MS",
     rating: 5,
     text: "Entrega super rápida e o preço do Bravecto foi o melhor que encontrei. O Thor nem percebeu que era remédio!",
   },
   {
     name: "Carlos Eduardo",
-    pet: "tutor da Mel 🐱",
+    pet: "tutor da Mel",
     avatar: "CE",
     rating: 5,
     text: "A areia Pipicat chegou em perfeito estado e o atendimento pelo WhatsApp foi nota 10. Virei cliente fiel!",
@@ -35,14 +36,14 @@ export const testimonials: Testimonial[] = [
   },
   {
     name: "Ricardo Almeida",
-    pet: "tutor do Simba 🐈",
+    pet: "tutor do Simba",
     avatar: "RA",
     rating: 4,
     text: "Ótima variedade de sachês. Meu gato é exigente e aqui sempre encontro os sabores que ele ama.",
   },
   {
     name: "Juliana Rocha",
-    pet: "tutora da Nina 🐕",
+    pet: "tutora da Nina",
     avatar: "JR",
     rating: 5,
     text: "O peitoral anti-puxão mudou nossos passeios! Qualidade excelente e chegou antes do prazo.",
@@ -92,7 +93,7 @@ export interface BlogPost {
   title: string;
   excerpt: string;
   category: string;
-  emoji: string;
+  icon: IconKey;
   gradient: string;
   date: string;
   readTime: string;
@@ -104,7 +105,7 @@ export const blogPosts: BlogPost[] = [
     title: "Como escolher o antipulgas ideal para o seu cão",
     excerpt: "Comprimido, coleira ou pipeta? Entenda as diferenças e descubra qual proteção combina com a rotina do seu pet.",
     category: "Saúde",
-    emoji: "🛡️",
+    icon: "shield",
     gradient: "from-brand-400 to-brand-600",
     date: "2026-06-28",
     readTime: "5 min",
@@ -114,7 +115,7 @@ export const blogPosts: BlogPost[] = [
     title: "Seu gato bebe pouca água? Veja 6 dicas para hidratá-lo",
     excerpt: "A hidratação é essencial para a saúde renal dos felinos. Fontes, sachês e truques que realmente funcionam.",
     category: "Gatos",
-    emoji: "💧",
+    icon: "droplets",
     gradient: "from-sky-400 to-cyan-600",
     date: "2026-06-20",
     readTime: "4 min",
@@ -124,7 +125,7 @@ export const blogPosts: BlogPost[] = [
     title: "Adestramento positivo: como usar petiscos do jeito certo",
     excerpt: "Recompensar na hora certa acelera o aprendizado. Aprenda a técnica usada por adestradores profissionais.",
     category: "Comportamento",
-    emoji: "🎓",
+    icon: "sparkles",
     gradient: "from-sun-400 to-orange-500",
     date: "2026-06-12",
     readTime: "6 min",

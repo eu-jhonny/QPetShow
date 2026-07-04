@@ -1,16 +1,6 @@
-import { getResend } from "@/lib/resend";
+import { sendWelcome } from "@/lib/email";
 
-export async function sendWelcomeEmail(
-  name: string,
-  email: string
-) {
-  return await getResend().emails.send({
-    from: process.env.EMAIL_FROM!,
-    to: email,
-    subject: "🐶 Bem-vindo à QPet!",
-    html: `
-      <h1>Olá, ${name}!</h1>
-      <p>Seu cadastro foi realizado com sucesso.</p>
-    `,
-  });
+/** Compat: delega para o serviço central de e-mail (templates + fallback seguro). */
+export async function sendWelcomeEmail(name: string, email: string) {
+  return sendWelcome(email, name);
 }

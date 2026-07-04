@@ -1,3 +1,5 @@
+import type { IconKey } from "@/lib/icon-map";
+
 export interface Product {
   id: string;
   slug: string;
@@ -8,7 +10,7 @@ export interface Product {
   oldPrice?: number;
   rating: number;
   reviews: number;
-  emoji: string;
+  icon: IconKey;
   gradient: string;
   badge?: "promo" | "novo" | "mais-vendido";
   description: string;
@@ -29,7 +31,7 @@ export const products: Product[] = [
     oldPrice: 253.2,
     rating: 4.9,
     reviews: 1284,
-    emoji: "🛡️",
+    icon: "shield",
     gradient: "from-brand-100 to-brand-300",
     badge: "mais-vendido",
     description:
@@ -47,7 +49,7 @@ export const products: Product[] = [
     oldPrice: 131.9,
     rating: 4.8,
     reviews: 967,
-    emoji: "🛡️",
+    icon: "shield",
     gradient: "from-sky-100 to-sky-300",
     badge: "promo",
     description:
@@ -65,7 +67,7 @@ export const products: Product[] = [
     oldPrice: 199.9,
     rating: 4.7,
     reviews: 542,
-    emoji: "📿",
+    icon: "shield",
     gradient: "from-sun-100 to-sun-300",
     badge: "promo",
     description:
@@ -83,7 +85,7 @@ export const products: Product[] = [
     oldPrice: 24.9,
     rating: 4.8,
     reviews: 2103,
-    emoji: "🐱",
+    icon: "layers",
     gradient: "from-blue-100 to-blue-300",
     badge: "mais-vendido",
     description:
@@ -101,7 +103,7 @@ export const products: Product[] = [
     oldPrice: 89.9,
     rating: 4.9,
     reviews: 876,
-    emoji: "🧻",
+    icon: "layers",
     gradient: "from-teal-100 to-teal-300",
     badge: "promo",
     description:
@@ -119,7 +121,7 @@ export const products: Product[] = [
     oldPrice: 74.9,
     rating: 4.6,
     reviews: 654,
-    emoji: "🐕",
+    icon: "layers",
     gradient: "from-brand-100 to-emerald-300",
     description:
       "Rápida absorção, controle de odores, camadas de proteção e fitas adesivas. Cuidado e conforto que seu pet merece.",
@@ -136,7 +138,7 @@ export const products: Product[] = [
     oldPrice: 3.99,
     rating: 4.7,
     reviews: 1521,
-    emoji: "🍗",
+    icon: "drumstick",
     gradient: "from-violet-100 to-purple-300",
     description:
       "Alimento premium 100% completo e balanceado, com taurina para saúde e energia. Trato urinário saudável e pelagem brilhante.",
@@ -153,7 +155,7 @@ export const products: Product[] = [
     oldPrice: 4.99,
     rating: 4.8,
     reviews: 1893,
-    emoji: "🍖",
+    icon: "drumstick",
     gradient: "from-orange-100 to-orange-300",
     badge: "mais-vendido",
     description:
@@ -171,7 +173,7 @@ export const products: Product[] = [
     oldPrice: 14.9,
     rating: 4.6,
     reviews: 438,
-    emoji: "🥩",
+    icon: "beef",
     gradient: "from-fire-100 to-fire-300",
     description:
       "Palitos 100% naturais que ajudam na saúde oral. Fonte de proteína com baixo teor de gordura.",
@@ -188,7 +190,7 @@ export const products: Product[] = [
     oldPrice: 199.9,
     rating: 4.9,
     reviews: 3241,
-    emoji: "🐶",
+    icon: "dog",
     gradient: "from-sun-100 to-orange-300",
     badge: "mais-vendido",
     description:
@@ -206,7 +208,7 @@ export const products: Product[] = [
     oldPrice: 259.9,
     rating: 4.9,
     reviews: 1764,
-    emoji: "🐱",
+    icon: "cat",
     gradient: "from-brand-100 to-brand-300",
     badge: "promo",
     description:
@@ -224,7 +226,7 @@ export const products: Product[] = [
     oldPrice: 99.9,
     rating: 4.8,
     reviews: 892,
-    emoji: "🎾",
+    icon: "toy",
     gradient: "from-fire-100 to-rose-300",
     badge: "novo",
     description:
@@ -242,7 +244,7 @@ export const products: Product[] = [
     oldPrice: 179.9,
     rating: 4.5,
     reviews: 312,
-    emoji: "🐈",
+    icon: "toy",
     gradient: "from-violet-100 to-indigo-300",
     description:
       "Torre arranhadora em sisal natural com plataforma e brinquedo suspenso. Protege seus móveis e diverte seu gato.",
@@ -259,7 +261,7 @@ export const products: Product[] = [
     oldPrice: 149.9,
     rating: 4.9,
     reviews: 567,
-    emoji: "🛏️",
+    icon: "bed",
     gradient: "from-amber-100 to-amber-300",
     badge: "novo",
     description:
@@ -277,7 +279,7 @@ export const products: Product[] = [
     oldPrice: 89.9,
     rating: 4.7,
     reviews: 421,
-    emoji: "🦮",
+    icon: "bone",
     gradient: "from-brand-100 to-teal-300",
     description:
       "Peitoral ergonômico acolchoado com alça de controle e guia de 1,2m. Passeios mais seguros e confortáveis.",
@@ -294,7 +296,7 @@ export const products: Product[] = [
     oldPrice: 159.9,
     rating: 4.6,
     reviews: 289,
-    emoji: "⛲",
+    icon: "droplets",
     gradient: "from-sky-100 to-cyan-300",
     badge: "novo",
     description:
@@ -312,7 +314,7 @@ export const products: Product[] = [
     oldPrice: 39.9,
     rating: 4.8,
     reviews: 734,
-    emoji: "🧴",
+    icon: "bath",
     gradient: "from-rose-100 to-pink-300",
     description:
       "Shampoo pH neutro hipoalergênico para cães e gatos. Limpa suavemente, hidrata e deixa os pelos brilhantes.",
@@ -329,7 +331,7 @@ export const products: Product[] = [
     oldPrice: 32.9,
     rating: 4.7,
     reviews: 512,
-    emoji: "💊",
+    icon: "pill",
     gradient: "from-emerald-100 to-green-300",
     description:
       "Vermífugo de amplo espectro para cães. Combate os principais vermes intestinais com segurança.",
@@ -346,7 +348,7 @@ export const products: Product[] = [
     oldPrice: 169.9,
     rating: 4.6,
     reviews: 2087,
-    emoji: "😺",
+    icon: "cat",
     gradient: "from-purple-100 to-violet-300",
     badge: "promo",
     description:
@@ -364,7 +366,7 @@ export const products: Product[] = [
     oldPrice: 27.9,
     rating: 4.8,
     reviews: 1105,
-    emoji: "🦴",
+    icon: "beef",
     gradient: "from-amber-100 to-orange-300",
     badge: "promo",
     description:
@@ -382,7 +384,7 @@ export const products: Product[] = [
     oldPrice: 209.9,
     rating: 4.9,
     reviews: 1456,
-    emoji: "🐕",
+    icon: "dog",
     gradient: "from-yellow-100 to-sun-300",
     description:
       "Nutrição completa para filhotes com DHA para desenvolvimento cerebral e cálcio para ossos fortes.",
@@ -399,7 +401,7 @@ export const products: Product[] = [
     oldPrice: 44.9,
     rating: 4.7,
     reviews: 623,
-    emoji: "💎",
+    icon: "layers",
     gradient: "from-cyan-100 to-blue-300",
     badge: "novo",
     description:
@@ -417,7 +419,7 @@ export const products: Product[] = [
     oldPrice: 69.9,
     rating: 4.4,
     reviews: 198,
-    emoji: "✨",
+    icon: "toy",
     gradient: "from-fuchsia-100 to-pink-300",
     badge: "novo",
     description:
@@ -435,7 +437,7 @@ export const products: Product[] = [
     oldPrice: 119.9,
     rating: 4.8,
     reviews: 345,
-    emoji: "🥣",
+    icon: "utensils",
     gradient: "from-stone-100 to-stone-300",
     description:
       "Comedouro duplo em aço inox com suporte elevado de bambu. Melhora a postura e a digestão do seu pet.",

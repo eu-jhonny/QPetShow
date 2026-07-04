@@ -1,29 +1,8 @@
-import { getResend } from "@/lib/resend";
+import { sendResetPassword } from "@/lib/email";
 
-export async function sendResetPasswordEmail(
-  email: string,
-  token: string
-) {
-  const url = `${process.env.APP_URL}/reset-password?token=${token}`;
-
-  return await getResend().emails.send({
-    from: process.env.EMAIL_FROM!,
-    to: email,
-    subject: "Recuperação de senha",
-    html: `
-      <h1>Recuperação de senha</h1>
-
-      <p>Recebemos uma solicitação para redefinir sua senha.</p>
-
-      <p>
-        <a href="${url}">
-          Clique aqui para redefinir sua senha
-        </a>
-      </p>
-
-      <p>Este link expira em 15 minutos.</p>
-
-      <p>Se você não solicitou essa alteração, ignore este e-mail.</p>
-    `,
-  });
+/** Compat: delega para o serviço central de e-mail. */
+export async function sendResetPasswordEmail(email: string, token: string, name = "cliente") {
+  const base = process.env.APP_URL ?? process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const url = `${base}/recuperar-senha/redefinir?token=${token}`;
+  return sendResetPassword(email, name, url);
 }

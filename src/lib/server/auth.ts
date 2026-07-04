@@ -97,4 +97,26 @@ export async function getSession(): Promise<SessionPayload | null> {
   return verifySessionToken(token);
 }
 
+/** Lista de e-mails com acesso ao painel administrativo (env ADMIN_EMAILS). */
+export function adminEmails(): string[] {
+  return (process.env.ADMIN_EMAILS ?? "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+export function isAdminEmail(email?: string | null): boolean {
+  if (!email) return false;
+  const list = adminEmails();
+  // Em dev, se nenhum admin configurado, qualquer usuário logado é admin.
+  if (list.length === 0) return true;
+  return list.includes(email.toLowerCase());
+}
+
+export async function getAdminSession(): Promise<SessionPayload | null> {
+  const session = await getSession();
+  if (!session || !isAdminEmail(session.email)) return null;
+  return session;
+}
+
 export { SESSION_COOKIE };
