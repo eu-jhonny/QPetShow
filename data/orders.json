@@ -1,0 +1,56 @@
+[
+  {
+    "userId": "1ce813bf-ab8e-4a51-ae4c-da5ab454d225",
+    "customer": {
+      "name": "Cliente Teste",
+      "email": "contato@qpetshop.com.br",
+      "phone": "(11) 99999-9999"
+    },
+    "address": {
+      "cep": "01000-000",
+      "street": "Rua A",
+      "number": "10",
+      "neighborhood": "Centro",
+      "city": "São Paulo",
+      "state": "SP"
+    },
+    "items": [
+      {
+        "productId": "p01",
+        "slug": "bravecto-caes-10-20kg",
+        "name": "Bravecto Antipulgas e Carrapatos para Cães 10-20kg",
+        "brand": "Bravecto",
+        "quantity": 1,
+        "price": 189.9
+      },
+      {
+        "productId": "p02",
+        "slug": "nexgard-caes-4-10kg",
+        "name": "NexGard Tablete Mastigável para Cães 4,1-10kg",
+        "brand": "NexGard",
+        "quantity": 1,
+        "price": 98.9
+      }
+    ],
+    "subtotal": 288.8,
+    "shipping": 0,
+    "discount": 0,
+    "total": 288.8,
+    "paymentMethod": "cartao",
+    "id": "3b2c7d01-af56-446e-b81c-1b30ba53c519",
+    "code": "QPS-180167",
+    "status": "pago",
+    "timeline": [
+      {
+        "status": "pendente",
+        "at": "2026-07-04T02:36:16.607Z"
+      },
+      {
+        "status": "pago",
+        "at": "2026-07-04T02:36:16.637Z"
+      }
+    ],
+    "createdAt": "2026-07-04T02:36:16.607Z",
+    "updatedAt": "2026-07-04T02:36:16.637Z"
+  }
+]

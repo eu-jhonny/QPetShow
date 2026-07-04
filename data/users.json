@@ -12,5 +12,26 @@
     "email": "vitaofernandes72@gmail.com",
     "passwordHash": "$2b$12$HiIQy9lLbZDd.pDQjgCTzedaefZk9YvwaA0op5ZWwNzuknFsMfTXW",
     "createdAt": "2026-07-03T21:45:51.564Z"
+  },
+  {
+    "id": "cc02d145-1c84-4eec-b0aa-b2d2e565a0ff",
+    "name": "Diag Teste",
+    "email": "diag1783130011264@teste.com",
+    "passwordHash": "$2b$12$motnYOLkIQ0esShJjS7oOOCK6W.yp7gaO2bqSCbxzoRXL25XfzFLm",
+    "createdAt": "2026-07-04T01:53:32.381Z"
+  },
+  {
+    "id": "fa033548-8375-4a18-ad75-d999f1b414fb",
+    "name": "Diag Dois",
+    "email": "diag2_1783130037094@teste.com",
+    "passwordHash": "$2b$12$vm5RuiYU5GTZNdY7F7ThrO3YiyswCWak.3SD6XD2/Iz4g33Mnt.Mm",
+    "createdAt": "2026-07-04T01:53:57.515Z"
+  },
+  {
+    "id": "1ce813bf-ab8e-4a51-ae4c-da5ab454d225",
+    "name": "Admin QPet",
+    "email": "contato@qpetshop.com.br",
+    "passwordHash": "$2b$12$8w7iz4IeN0k.900FR5pai.qEil0jMuo0rnr5.n3Hpub4PtFFGi3N6",
+    "createdAt": "2026-07-04T02:36:06.778Z"
   }
 ]
